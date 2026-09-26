@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ur" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HRMS — Attendance Portal</title>
+<style>
+  :root{
+    --ink:#1c2b24;
+    --paper:#f6f4ef;
+    --card:#ffffff;
+    --line:#dfd9c9;
+    --moss:#3f5c48;
+    --moss-dark:#2c4132;
+    --clay:#b5623a;
+    --amber:#c78a2b;
+    --muted:#7a7364;
+    --danger:#a33a2e;
+    --radius:10px;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', 'Noto Nastaliq Urdu', system-ui, -apple-system, sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    min-height:100vh;
+  }
+  .topbar{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:18px 28px;border-bottom:1px solid var(--line);
+    background:var(--card);
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;letter-spacing:.2px;}
+  .brand .mark{width:30px;height:30px;border-radius:7px;background:var(--moss);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.85rem;font-weight:800;}
+  .who{display:flex;align-items:center;gap:14px;font-size:.9rem;color:var(--muted);}
+  .who button{
+    border:1px solid var(--line);background:var(--card);color:var(--ink);
+    padding:7px 14px;border-radius:8px;cursor:pointer;font-size:.85rem;
+  }
+  .who button:hover{border-color:var(--moss);}
+
+  .wrap{max-width:1060px;margin:0 auto;padding:32px 24px 60px;}
+
+  /* ---------- LOGIN ---------- */
+  #loginView{
+    min-height:calc(100vh - 70px);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .login-card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:44px 40px;width:100%;max-width:380px;
+    box-shadow:0 1px 3px rgba(28,43,36,.06);
+  }
+  .login-card h1{font-size:1.4rem;margin:0 0 6px;}
+  .login-card p{color:var(--muted);margin:0 0 28px;font-size:.92rem;}
+  label{display:block;font-size:.82rem;color:var(--muted);margin-bottom:6px;font-weight:600;}
+  input{
+    width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:8px;
+    font-size:.95rem;margin-bottom:18px;background:#fff;color:var(--ink);
+  }
+  input:focus{outline:none;border-color:var(--moss);}
+  .btn{
+    display:inline-block;width:100%;padding:12px;border:none;border-radius:8px;
+    background:var(--moss);color:#fff;font-size:.95rem;font-weight:600;cursor:pointer;
+    transition:background .15s;
+  }
+  .btn:hover{background:var(--moss-dark);}
+  .btn.secondary{background:transparent;border:1px solid var(--line);color:var(--ink);}
+  .btn.secondary:hover{border-color:var(--moss);}
+  .btn.danger{background:var(--danger);}
+  .btn-row{display:flex;gap:10px;}
+  .btn-row .btn{width:auto;flex:1;}
+  .msg{font-size:.85rem;margin-top:-8px;margin-bottom:16px;min-height:1.1em;}
+  .msg.error{color:var(--danger);}
+  .msg.ok{color:var(--moss);}
+
+  /* ---------- SHARED ---------- */
+  .hidden{display:none !important;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media (max-width:640px){.grid{grid-template-columns:1fr;}}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 24px;
+  }
+  .card h2{font-size:1rem;margin:0 0 16px;color:var(--ink);}
+  .card h2 .sub{color:var(--muted);font-weight:400;font-size:.82rem;}
+  .stat-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px dashed var(--line);font-size:.9rem;}
+  .stat-row:last-child{border-bottom:none;}
+  .stat-row .label{color:var(--muted);}
+  .stat-row .value{font-weight:600;}
+  .pill{
+    display:inline-block;padding:3px 10px;border-radius:999px;font-size:.75rem;font-weight:600;
+  }
+  .pill.on{background:#e5efe6;color:var(--moss-dark);}
+  .pill.off{background:#f1ece0;color:var(--muted);}
+  .pill.pending{background:#f6ecd6;color:var(--amber);}
+  .pill.approved{background:#e5efe6;color:var(--moss-dark);}
+  .pill.rejected{background:#f6e3de;color:var(--danger);}
+
+  section.panel{margin-bottom:24px;}
+  table{width:100%;border-collapse:collapse;font-size:.85rem;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);}
+  th{color:var(--muted);font-weight:600;font-size:.78rem;text-transform:none;}
+  tr:last-child td{border-bottom:none;}
+  .table-wrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);}
+  .table-wrap table{margin:0;}
+
+  .tabs{display:flex;gap:6px;margin-bottom:20px;border-bottom:1px solid var(--line);}
+  .tab{
+    padding:9px 4px;margin-bottom:-1px;border-bottom:2px solid transparent;
+    color:var(--muted);cursor:pointer;font-size:.9rem;font-weight:600;
+  }
+  .tab.active{color:var(--moss-dark);border-bottom-color:var(--moss);}
+
+  textarea{
+    width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:8px;
+    font-size:.9rem;margin-bottom:14px;font-family:inherit;resize:vertical;min-height:70px;
+  }
+  .field-row{display:flex;gap:12px;}
+  .field-row > div{flex:1;}
+  .small-btn{padding:8px 14px;font-size:.82rem;border-radius:7px;}
+  .empty{color:var(--muted);font-size:.85rem;padding:14px 0;text-align:center;}
+</style>
+</head>
+<body>
+
+<!-- ============ CONFIG ============ -->
+<script>
+  // Yahan apna Google Apps Script Web App URL paste karain (SETUP_GUIDE.md dekhain)
+  const API_URL = "https://script.google.com/macros/s/AKfycbzCkgwwIVHJzUFLlXHDJCskNwETrtZCaLbTvBIcN4eWOS1Ipb3H1SRxi46lMMd1cVxr/exec";
+</script>
+
+<!-- ============ LOGIN VIEW ============ -->
+<div id="loginView">
+  <div class="login-card">
+    <h1>HRMS Portal</h1>
+    <p>Apna Employee ID aur password darj karain</p>
+    <label>Employee ID</label>
+    <input id="loginId" placeholder="e.g. EMP01" />
+    <label>Password</label>
+    <input id="loginPass" type="password" placeholder="••••••••" />
+    <div class="msg error" id="loginMsg"></div>
+    <button class="btn" onclick="doLogin()">Login</button>
+  </div>
+</div>
+
+<!-- ============ APP VIEW ============ -->
+<div id="appView" class="hidden">
+  <div class="topbar">
+    <div class="brand"><div class="mark">H</div> HRMS Portal</div>
+    <div class="who">
+      <span id="whoName"></span>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </div>
+  <div class="wrap">
+
+    <!-- Employee view -->
+    <div id="employeeView" class="hidden">
+      <div class="grid panel">
+        <div class="card">
+          <h2>Aaj ka Status <span class="sub" id="todayDate"></span></h2>
+          <div class="stat-row"><span class="label">Check-in</span><span class="value" id="stCheckIn">—</span></div>
+          <div class="stat-row"><span class="label">Check-out</span><span class="value" id="stCheckOut">—</span></div>
+          <div class="stat-row"><span class="label">Break (total)</span><span class="value" id="stBreak">0 min</span></div>
+          <div class="stat-row"><span class="label">Break status</span><span class="value"><span class="pill off" id="stBreakPill">Off</span></span></div>
+          <div class="msg" id="actionMsg" style="margin-top:14px;"></div>
+          <div class="btn-row" style="margin-top:6px;">
+            <button class="btn" id="btnCheckIn" onclick="callCheckIn()">Check In</button>
+            <button class="btn secondary" id="btnCheckOut" onclick="callCheckOut()">Check Out</button>
+          </div>
+          <div class="btn-row" style="margin-top:10px;">
+            <button class="btn secondary" id="btnBreakStart" onclick="callBreakStart()">Start Break</button>
+            <button class="btn secondary" id="btnBreakEnd" onclick="callBreakEnd()">End Break</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Leave Apply Karain</h2>
+          <div class="field-row">
+            <div><label>From</label><input type="date" id="leaveFrom"></div>
+            <div><label>To</label><input type="date" id="leaveTo"></div>
+          </div>
+          <label>Wajah</label>
+          <textarea id="leaveReason" placeholder="Leave ki wajah likhain..."></textarea>
+          <div class="msg" id="leaveMsg"></div>
+          <button class="btn" onclick="submitLeave()">Leave Bhejain</button>
+        </div>
+      </div>
+
+      <section class="panel">
+        <h2 style="margin-bottom:12px;">Is Mahine Ki Attendance</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Date</th><th>Check-in</th><th>Check-out</th><th>Break (min)</th><th>Work Hrs</th><th>Deduction</th><th>Status</th></tr></thead>
+            <tbody id="myRecordsBody"><tr><td colspan="7" class="empty">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 style="margin-bottom:12px;">Meri Leaves</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>From</th><th>To</th><th>Wajah</th><th>Status</th></tr></thead>
+            <tbody id="myLeavesBody"><tr><td colspan="4" class="empty">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- Admin view -->
+    <div id="adminView" class="hidden">
+      <div class="tabs">
+        <div class="tab active" data-tab="overview" onclick="switchAdminTab('overview')">Overview</div>
+        <div class="tab" data-tab="leaves" onclick="switchAdminTab('leaves')">Leave Requests</div>
+      </div>
+
+      <div id="adminOverview">
+        <section class="panel">
+          <h2 style="margin-bottom:12px;">Sab Employees — Is Mahine <span class="sub" id="adminMonth"></span></h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Emp ID</th><th>Name</th><th>Date</th><th>Check-in</th><th>Check-out</th><th>Break (min)</th><th>Work Hrs</th><th>Deduction</th><th>Status</th></tr></thead>
+              <tbody id="adminRecordsBody"><tr><td colspan="9" class="empty">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div id="adminLeaves" class="hidden">
+        <section class="panel">
+          <h2 style="margin-bottom:12px;">Leave Requests</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Emp ID</th><th>Name</th><th>From</th><th>To</th><th>Wajah</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody id="adminLeavesBody"><tr><td colspan="7" class="empty">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let session = JSON.parse(localStorage.getItem("hrms_session") || "null");
+
+// Apps Script web apps read params from e.parameter, so we send data as a form field via POST.
+function callApi(action, extra) {
+  const payload = Object.assign({ action: action }, extra || {});
+  const form = new FormData();
+  form.append("data", JSON.stringify(payload));
+  return fetch(API_URL, { method: "POST", body: form }).then(r => r.json());
+}
+
+function fmtTime(v) {
+  if (!v) return "—";
+  const d = new Date(v);
+  if (isNaN(d)) return v;
+  return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+function fmtDate(v) {
+  if (!v) return "—";
+  const d = new Date(v);
+  if (isNaN(d)) return v;
+  return d.toLocaleDateString();
+}
+
+function showApp() {
+  document.getElementById("loginView").classList.add("hidden");
+  document.getElementById("appView").classList.remove("hidden");
+  document.getElementById("whoName").textContent = session.name + " (" + session.role + ")";
+  document.getElementById("todayDate").textContent = new Date().toLocaleDateString();
+
+  if (session.role === "admin") {
+    document.getElementById("adminView").classList.remove("hidden");
+    loadAdminOverview();
+    loadAdminLeaves();
+  } else {
+    document.getElementById("employeeView").classList.remove("hidden");
+    refreshTodayStatus();
+    loadMyRecords();
+    loadMyLeaves();
+  }
+}
+
+function doLogin() {
+  const empId = document.getElementById("loginId").value.trim();
+  const password = document.getElementById("loginPass").value;
+  const msg = document.getElementById("loginMsg");
+  msg.textContent = "";
+  if (!empId || !password) { msg.textContent = "ID aur password darj karain"; return; }
+
+  callApi("login", { empId, password }).then(res => {
+    if (res.success) {
+      session = res;
+      localStorage.setItem("hrms_session", JSON.stringify(session));
+      showApp();
+    } else {
+      msg.textContent = res.message || "Login fail ho gaya";
+    }
+  }).catch(() => msg.textContent = "Connection error — API_URL check karain");
+}
+
+function logout() {
+  session = null;
+  localStorage.removeItem("hrms_session");
+  location.reload();
+}
+
+// ---------- EMPLOYEE ACTIONS ----------
+
+function refreshTodayStatus() {
+  callApi("getTodayStatus", { empId: session.empId }).then(res => {
+    if (!res.success) return;
+    document.getElementById("stCheckIn").textContent = fmtTime(res.checkInTime);
+    document.getElementById("stCheckOut").textContent = fmtTime(res.checkOutTime);
+    document.getElementById("stBreak").textContent = (res.totalBreakMins || 0) + " min";
+    const pill = document.getElementById("stBreakPill");
+    pill.textContent = res.onBreak ? "On Break" : "Off";
+    pill.className = "pill " + (res.onBreak ? "on" : "off");
+
+    document.getElementById("btnCheckIn").disabled = res.checkedIn;
+    document.getElementById("btnCheckOut").disabled = !res.checkedIn || res.checkedOut;
+    document.getElementById("btnBreakStart").disabled = !res.checkedIn || res.onBreak || res.checkedOut;
+    document.getElementById("btnBreakEnd").disabled = !res.onBreak;
+  });
+}
+
+function actionMsg(text, ok) {
+  const el = document.getElementById("actionMsg");
+  el.textContent = text;
+  el.className = "msg " + (ok ? "ok" : "error");
+}
+
+function callCheckIn() {
+  callApi("checkIn", { empId: session.empId }).then(res => {
+    actionMsg(res.message, res.success);
+    refreshTodayStatus(); loadMyRecords();
+  });
+}
+function callCheckOut() {
+  callApi("checkOut", { empId: session.empId }).then(res => {
+    actionMsg(res.message, res.success);
+    refreshTodayStatus(); loadMyRecords();
+  });
+}
+function callBreakStart() {
+  callApi("breakStart", { empId: session.empId }).then(res => {
+    actionMsg(res.message, res.success);
+    refreshTodayStatus();
+  });
+}
+function callBreakEnd() {
+  callApi("breakEnd", { empId: session.empId }).then(res => {
+    actionMsg(res.message, res.success);
+    refreshTodayStatus(); loadMyRecords();
+  });
+}
+
+function loadMyRecords() {
+  callApi("getMyData", { empId: session.empId }).then(res => {
+    const body = document.getElementById("myRecordsBody");
+    if (!res.success || !res.records.length) {
+      body.innerHTML = '<tr><td colspan="7" class="empty">Is mahine abhi koi record nahi</td></tr>';
+      return;
+    }
+    body.innerHTML = res.records.map(r => `
+      <tr>
+        <td>${fmtDate(r.date)}</td>
+        <td>${fmtTime(r.checkIn)}</td>
+        <td>${fmtTime(r.checkOut)}</td>
+        <td>${r.totalBreakMins || 0}</td>
+        <td>${r.workHours || "—"}</td>
+        <td>${r.deduction || "—"}</td>
+        <td>${r.status || "—"}</td>
+      </tr>`).join("");
+  });
+}
+
+function submitLeave() {
+  const fromDate = document.getElementById("leaveFrom").value;
+  const toDate = document.getElementById("leaveTo").value;
+  const reason = document.getElementById("leaveReason").value.trim();
+  const msg = document.getElementById("leaveMsg");
+  if (!fromDate || !toDate) { msg.className = "msg error"; msg.textContent = "Dates select karain"; return; }
+
+  callApi("applyLeave", { empId: session.empId, fromDate, toDate, reason }).then(res => {
+    msg.className = "msg " + (res.success ? "ok" : "error");
+    msg.textContent = res.message;
+    if (res.success) { loadMyLeaves(); document.getElementById("leaveReason").value = ""; }
+  });
+}
+
+function leavePillClass(status) {
+  if (status === "Approved") return "approved";
+  if (status === "Rejected") return "rejected";
+  return "pending";
+}
+
+function loadMyLeaves() {
+  callApi("getLeaves", { empId: session.empId, role: session.role }).then(res => {
+    const body = document.getElementById("myLeavesBody");
+    if (!res.success || !res.leaves.length) {
+      body.innerHTML = '<tr><td colspan="4" class="empty">Koi leave request nahi</td></tr>';
+      return;
+    }
+    body.innerHTML = res.leaves.map(l => `
+      <tr>
+        <td>${fmtDate(l.FromDate)}</td>
+        <td>${fmtDate(l.ToDate)}</td>
+        <td>${l.Reason || "—"}</td>
+        <td><span class="pill ${leavePillClass(l.Status)}">${l.Status}</span></td>
+      </tr>`).join("");
+  });
+}
+
+// ---------- ADMIN ----------
+
+function switchAdminTab(tab) {
+  document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.tab === tab));
+  document.getElementById("adminOverview").classList.toggle("hidden", tab !== "overview");
+  document.getElementById("adminLeaves").classList.toggle("hidden", tab !== "leaves");
+}
+
+function loadAdminOverview() {
+  callApi("getAllData", { role: session.role }).then(res => {
+    if (!res.success) return;
+    document.getElementById("adminMonth").textContent = "(" + res.month + ")";
+    const body = document.getElementById("adminRecordsBody");
+    if (!res.records.length) {
+      body.innerHTML = '<tr><td colspan="9" class="empty">Is mahine abhi koi attendance nahi</td></tr>';
+      return;
+    }
+    body.innerHTML = res.records.map(r => `
+      <tr>
+        <td>${r.empId}</td><td>${r.name}</td><td>${fmtDate(r.date)}</td>
+        <td>${fmtTime(r.checkIn)}</td><td>${fmtTime(r.checkOut)}</td>
+        <td>${r.totalBreakMins || 0}</td><td>${r.workHours || "—"}</td>
+        <td>${r.deduction || "—"}</td><td>${r.status || "—"}</td>
+      </tr>`).join("");
+  });
+}
+
+function loadAdminLeaves() {
+  callApi("getLeaves", { role: session.role }).then(res => {
+    const body = document.getElementById("adminLeavesBody");
+    if (!res.success || !res.leaves.length) {
+      body.innerHTML = '<tr><td colspan="7" class="empty">Koi leave request nahi</td></tr>';
+      return;
+    }
+    body.innerHTML = res.leaves.map(l => `
+      <tr>
+        <td>${l.EmpID}</td><td>${l.Name}</td><td>${fmtDate(l.FromDate)}</td><td>${fmtDate(l.ToDate)}</td>
+        <td>${l.Reason || "—"}</td>
+        <td><span class="pill ${leavePillClass(l.Status)}">${l.Status}</span></td>
+        <td>
+          ${l.Status === "Pending" ? `
+            <button class="btn small-btn" onclick="actOnLeave('${l.LeaveID}','Approved')">Approve</button>
+            <button class="btn secondary small-btn" onclick="actOnLeave('${l.LeaveID}','Rejected')">Reject</button>
+          ` : "—"}
+        </td>
+      </tr>`).join("");
+  });
+}
+
+function actOnLeave(leaveId, status) {
+  callApi("setLeaveStatus", { leaveId, status }).then(res => {
+    loadAdminLeaves();
+  });
+}
+
+// ---------- INIT ----------
+if (session) { showApp(); }
+</script>
+</body>
+</html>
