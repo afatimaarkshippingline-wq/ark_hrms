@@ -426,9 +426,9 @@
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 text-sm"><i
                                 class="fa-solid fa-id-badge"></i></span>
-                        <input type="text" id="login-empid" required value="ADM-001" autocomplete="username"
-                            placeholder="e.g. ADM-001 or EMP-001"
-                            class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-800/60 text-slate-800 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all uppercase tracking-wide">
+                        <input type="text" id="login-empid" required value="1" autocomplete="username"
+                            placeholder="e.g. 1 or 101"
+                            class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-800/60 text-slate-800 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all tracking-wide">
                     </div>
                 </div>
 
@@ -461,18 +461,7 @@
                 </button>
             </form>
 
-            <div class="mt-6 pt-5 border-t border-slate-200/70 dark:border-slate-700/60 text-center">
-                <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-2.5">Demo Access</p>
-                <button type="button" onclick="fillDemo()"
-                    class="w-full py-2.5 px-3 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors">
-                    <i class="fa-solid fa-bolt mr-1.5 text-amber-500"></i> Use Demo Account (ADM-001)
-                </button>
-                <p class="mt-3 text-[10px] text-slate-400 leading-relaxed">
-                    Admin: <span class="font-mono font-semibold text-slate-600 dark:text-slate-300">ADM-001 / admin123</span>
-                    &nbsp;·&nbsp;
-                    Staff: <span class="font-mono font-semibold text-slate-600 dark:text-slate-300">EMP-001 / emp123</span>
-                </p>
-            </div>
+
         </div>
     </div>
 
@@ -940,11 +929,11 @@
                             <select id="emp-filter-dept" onchange="filterEmployeeDirectory()"
                                 class="py-2 px-3 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none">
                                 <option value="All">All Departments</option>
-                                <option value="Engineering">Engineering</option>
-                                <option value="Product & Design">Product & Design</option>
-                                <option value="HR & Operations">HR & Operations</option>
-                                <option value="Sales & Marketing">Sales & Marketing</option>
-                                <option value="Finance">Finance</option>
+                                <option value="Accounts">Accounts</option>
+                                <option value="Documentation">Documentation</option>
+                                <option value="Dispatch">Dispatch</option>
+                                <option value="Operations">Operations</option>
+                                <option value="HR">HR</option>
                             </select>
                             <!-- Status Filter -->
                             <select id="emp-filter-status" onchange="filterEmployeeDirectory()"
@@ -2094,11 +2083,11 @@
                         <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Department</label>
                         <select id="form-emp-dept"
                             class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-800 dark:text-slate-100 focus:outline-none">
-                            <option value="Engineering">Engineering</option>
-                            <option value="Product & Design">Product & Design</option>
-                            <option value="HR & Operations">HR & Operations</option>
-                            <option value="Sales & Marketing">Sales & Marketing</option>
-                            <option value="Finance">Finance</option>
+                            <option value="Accounts">Accounts</option>
+                            <option value="Documentation">Documentation</option>
+                            <option value="Dispatch">Dispatch</option>
+                            <option value="Operations">Operations</option>
+                            <option value="HR">HR</option>
                         </select>
                     </div>
                     <div>
@@ -2286,57 +2275,91 @@
     <!-- ================= JAVASCRIPT APPLICATION CODE ================= -->
     <script>
         // --- 1. CONFIG & DEFAULT STORE ---
-        const DEFAULT_API_URL = "https://script.google.com/macros/s/AKfycbxDPQuXauxsOMkFwutEo9wCijWQGtwvSVrxd5J0iRb3HsRXLtjkbsZ5o1Y5-JUcwI7t/exec";
+        const DEFAULT_API_URL = "https://script.google.com/macros/s/AKfycbx_i-cj5azNRn2QLV2uHjfwCm62G95zjlZCjnTASk4dWScpUcFlK8dcb9ZwszAtWIbB/exec";
         let API_URL = localStorage.getItem('ark_backend_url') || DEFAULT_API_URL;
 
         // Unified auth accounts (login by EmpID + password; role derived from account)
         const ADMIN_ACCOUNT = {
-            id: 'ADM-001',
+            id: '1',
             name: 'Administrator',
             email: 'admin@ark.com',
             password: 'admin123',
             role: 'admin',
             designation: 'Super Administrator',
-            dept: 'HR & Operations',
+            dept: 'HR',
             avatar: '👨‍💼'
         };
 
         // Realistic Mock Employees Pool
         const INITIAL_EMPLOYEES = [
-            { id: 'EMP-001', name: 'John Doe', email: 'john@ark.com', password: 'emp123', dept: 'Engineering', role: 'Staff Software Engineer', salary: 6200, status: 'Active', avatar: '👨‍💼', joined: '15 Jan 2024' },
-            { id: 'EMP-002', name: 'Sarah Smith', email: 'sarah@ark.com', password: 'emp123', dept: 'HR & Operations', role: 'Head of People Operations', salary: 5800, status: 'Active', avatar: '👩‍💼', joined: '02 Feb 2023' },
-            { id: 'EMP-003', name: 'Michael Chen', email: 'michael@ark.com', password: 'emp123', dept: 'Product & Design', role: 'Lead Product Designer', salary: 5400, status: 'Away', avatar: '🧑‍🎨', joined: '10 Aug 2023' },
-            { id: 'EMP-004', name: 'Fatima Zahra', email: 'fatima@ark.com', password: 'emp123', dept: 'Engineering', role: 'Senior Backend Engineer', salary: 5100, status: 'Active', avatar: '👩‍💻', joined: '18 Nov 2023' },
-            { id: 'EMP-005', name: 'David Miller', email: 'david@ark.com', password: 'emp123', dept: 'Finance', role: 'Senior Financial Analyst', salary: 4900, status: 'On Leave', avatar: '👨‍💼', joined: '05 Mar 2024' },
-            { id: 'EMP-006', name: 'Ayesha Khan', email: 'ayesha@ark.com', password: 'emp123', dept: 'Sales & Marketing', role: 'Growth Marketing Manager', salary: 4700, status: 'Active', avatar: '👩‍💼', joined: '12 Apr 2024' },
-            { id: 'EMP-007', name: 'Tariq Mahmood', email: 'tariq@ark.com', password: 'emp123', dept: 'Engineering', role: 'DevOps & Cloud Architect', salary: 5600, status: 'Active', avatar: '🧑‍💻', joined: '01 Jun 2023' },
-            { id: 'EMP-008', name: 'Elena Rostova', email: 'elena@ark.com', password: 'emp123', dept: 'Product & Design', role: 'UX Research Specialist', salary: 4300, status: 'Active', avatar: '👩‍🔬', joined: '20 Jul 2024' },
-            { id: 'EMP-009', name: 'Bilal Ahmed', email: 'bilal@ark.com', password: 'emp123', dept: 'Sales & Marketing', role: 'Enterprise Account Exec', salary: 4200, status: 'Active', avatar: '👨‍💼', joined: '14 Jan 2025' },
-            { id: 'EMP-010', name: 'Zoya Malik', email: 'zoya@ark.com', password: 'emp123', dept: 'HR & Operations', role: 'Talent Acquisition Partner', salary: 4100, status: 'Active', avatar: '👩‍💼', joined: '09 Oct 2024' }
+            { id: '101', name: 'Dara Janwary', email: 'dara.janwary@ark.com', password: '123456', dept: 'Accounts', role: 'Accounts Manager', salary: 0, status: 'Active', avatar: '👨‍💼', joined: '15 Jan 2024', managerId: '1' },
+            { id: '102', name: 'Samra Farid', email: 'samra.farid@ark.com', password: '123456', dept: 'Accounts', role: 'Accounts Executive', salary: 0, status: 'Active', avatar: '👩‍💼', joined: '20 Feb 2024', managerId: '101' },
+            { id: '103', name: 'Zeeshan Rashid', email: 'zeeshan.rashid@ark.com', password: '123456', dept: 'Accounts', role: 'Accounts Officer', salary: 0, status: 'Active', avatar: '👨‍💻', joined: '10 Mar 2024', managerId: '101' },
+            { id: '104', name: 'Faraz Ud Din', email: 'faraz.uddin@ark.com', password: '123456', dept: 'Documentation', role: 'Documentation Manager', salary: 0, status: 'Active', avatar: '👨‍💼', joined: '05 Jan 2024', managerId: '1' },
+            { id: '105', name: 'Rehab Zehra', email: 'rehab.zehra@ark.com', password: '123456', dept: 'Documentation', role: 'Documentation Officer', salary: 0, status: 'Active', avatar: '👩‍💼', joined: '18 Feb 2024', managerId: '104' },
+            { id: '106', name: 'Ali Hussain', email: 'ali.hussain@ark.com', password: '123456', dept: 'Documentation', role: 'Documentation Executive', salary: 0, status: 'Active', avatar: '👨‍💻', joined: '22 Mar 2024', managerId: '104' },
+            { id: '107', name: 'Maryam Siddiqui', email: 'maryam.siddiqui@ark.com', password: '123456', dept: 'Dispatch', role: 'Dispatch Manager', salary: 0, status: 'Active', avatar: '👩‍💼', joined: '12 Jan 2024', managerId: '1' },
+            { id: '108', name: 'Shaema Hafeez', email: 'shaema.hafeez@ark.com', password: '123456', dept: 'Dispatch', role: 'Dispatch Officer', salary: 0, status: 'Active', avatar: '👩‍💻', joined: '08 Feb 2024', managerId: '107' },
+            { id: '109', name: 'Hamid', email: 'hamid@ark.com', password: '123456', dept: 'Dispatch', role: 'Dispatch Executive', salary: 0, status: 'Active', avatar: '👨‍💼', joined: '15 Mar 2024', managerId: '107' },
+            { id: '110', name: 'Iffrah Syed', email: 'iffrah.syed@ark.com', password: '123456', dept: 'Operations', role: 'Operations Manager', salary: 0, status: 'Active', avatar: '👩‍💼', joined: '01 Feb 2024', managerId: '1' },
+            { id: '111', name: 'Muhammad Hamiz', email: 'muhammad.hamiz@ark.com', password: '123456', dept: 'Operations', role: 'Operations Executive', salary: 0, status: 'Active', avatar: '👨‍💻', joined: '20 Mar 2024', managerId: '110' },
+            { id: '112', name: 'Ayesha Fatima', email: 'ayesha.fatima@ark.com', password: '123456', dept: 'HR', role: 'HR Manager', salary: 0, status: 'Active', avatar: '👩‍💼', joined: '10 Jan 2024', managerId: '1' }
         ];
 
         const INITIAL_LEAVES = [
-            { id: 'LV-101', empId: 'EMP-005', empName: 'David Miller', type: 'Annual Leave', from: '2026-09-28', to: '2026-10-02', days: 5, reason: 'Family vacation and personal downtime.', status: 'Pending' },
-            { id: 'LV-102', empId: 'EMP-003', empName: 'Michael Chen', type: 'Work From Home', from: '2026-09-29', to: '2026-09-30', days: 2, reason: 'Home maintenance & contractor visit.', status: 'Pending' },
-            { id: 'LV-103', empId: 'EMP-001', empName: 'John Doe', type: 'Sick Leave', from: '2026-09-12', to: '2026-09-13', days: 2, reason: 'Seasonal flu recovery.', status: 'Approved' },
-            { id: 'LV-104', empId: 'EMP-004', empName: 'Fatima Zahra', type: 'Annual Leave', from: '2026-08-15', to: '2026-08-18', days: 4, reason: 'Attending cloud conference.', status: 'Approved' },
-            { id: 'LV-105', empId: 'EMP-009', empName: 'Bilal Ahmed', type: 'Casual Leave', from: '2026-09-02', to: '2026-09-02', days: 1, reason: 'Personal documentation at embassy.', status: 'Rejected' }
+            { id: 'LV-101', empId: '102', empName: 'Samra Farid', type: 'Annual Leave', from: '2026-09-28', to: '2026-10-02', days: 5, reason: 'Family vacation.', status: 'Pending', managerId: '101' },
+            { id: 'LV-102', empId: '105', empName: 'Rehab Zehra', type: 'Sick Leave', from: '2026-09-29', to: '2026-09-30', days: 2, reason: 'Medical appointment.', status: 'Pending', managerId: '104' },
+            { id: 'LV-103', empId: '108', empName: 'Shaema Hafeez', type: 'Casual Leave', from: '2026-09-12', to: '2026-09-12', days: 1, reason: 'Personal work.', status: 'Approved', managerId: '107' },
+            { id: 'LV-104', empId: '111', empName: 'Muhammad Hamiz', type: 'Annual Leave', from: '2026-08-15', to: '2026-08-16', days: 2, reason: 'Family event.', status: 'Approved', managerId: '110' }
         ];
 
         const INITIAL_TIMESHEETS = [
-            { id: 'TS-01', empName: 'John Doe', empId: 'EMP-001', action: 'Check In', time: '08:55 AM', date: '2026-09-27', totalHours: '6.4h', punctuality: 'On Time' },
-            { id: 'TS-02', empName: 'Sarah Smith', empId: 'EMP-002', action: 'Check In', time: '09:02 AM', date: '2026-09-27', totalHours: '6.2h', punctuality: 'On Time' },
-            { id: 'TS-03', empName: 'Michael Chen', empId: 'EMP-003', action: 'Step Away', time: '01:15 PM', date: '2026-09-27', totalHours: '4.1h', punctuality: 'On Time' },
-            { id: 'TS-04', empName: 'Fatima Zahra', empId: 'EMP-004', action: 'Check In', time: '09:24 AM', date: '2026-09-27', totalHours: '5.8h', punctuality: 'Late Arrival' },
-            { id: 'TS-05', empName: 'Ayesha Khan', empId: 'EMP-006', action: 'Check In', time: '08:48 AM', date: '2026-09-27', totalHours: '6.5h', punctuality: 'Early Arrival' },
-            { id: 'TS-06', empName: 'Tariq Mahmood', empId: 'EMP-007', action: 'Check In', time: '09:00 AM', date: '2026-09-27', totalHours: '6.3h', punctuality: 'On Time' },
-            { id: 'TS-07', empName: 'Elena Rostova', empId: 'EMP-008', action: 'Break', time: '12:30 PM', date: '2026-09-27', totalHours: '4.8h', punctuality: 'On Time' }
+            { id: 'TS-01', empName: 'Dara Janwary', empId: '101', action: 'Check In', time: '08:55 AM', date: '2026-09-27', totalHours: '6.4h', punctuality: 'On Time' },
+            { id: 'TS-02', empName: 'Samra Farid', empId: '102', action: 'Check In', time: '09:02 AM', date: '2026-09-27', totalHours: '6.2h', punctuality: 'On Time' },
+            { id: 'TS-03', empName: 'Faraz Ud Din', empId: '104', action: 'Check In', time: '08:50 AM', date: '2026-09-27', totalHours: '6.5h', punctuality: 'On Time' },
+            { id: 'TS-04', empName: 'Rehab Zehra', empId: '105', action: 'Check In', time: '09:20 AM', date: '2026-09-27', totalHours: '5.8h', punctuality: 'Late Arrival' },
+            { id: 'TS-05', empName: 'Maryam Siddiqui', empId: '107', action: 'Check In', time: '08:48 AM', date: '2026-09-27', totalHours: '6.5h', punctuality: 'Early Arrival' },
+            { id: 'TS-06', empName: 'Iffrah Syed', empId: '110', action: 'Check In', time: '09:00 AM', date: '2026-09-27', totalHours: '6.3h', punctuality: 'On Time' },
+            { id: 'TS-07', empName: 'Ayesha Fatima', empId: '112', action: 'Check In', time: '08:58 AM', date: '2026-09-27', totalHours: '6.4h', punctuality: 'On Time' }
         ];
 
         const AVATARS = ['👨‍💼', '👩‍💼', '🧑‍💻', '👩‍💻', '👨‍🔬', '👩‍🔬', '👨‍🎨', '👩‍🎨', '🧑‍🚀', '🧑‍🏫', '🧕', '🧔', '🧑‍💼', '👨‍💻', '👩‍🦰'];
 
         // Storage load or initialize
-        let employees = JSON.parse(localStorage.getItem('ark_employees')) || INITIAL_EMPLOYEES;
+                let employees = JSON.parse(localStorage.getItem('ark_employees')) || INITIAL_EMPLOYEES;
+        // Migrate: force current roster + passwords from INITIAL (clears stale demo data)
+        (function migrateEmployees() {
+            const byId = {};
+            INITIAL_EMPLOYEES.forEach(e => { byId[String(e.id)] = e; });
+            // If local data is old (EMP-xxx) or empty, replace entirely
+            const hasOldIds = employees.some(e => String(e.id).startsWith('EMP-') || String(e.id).startsWith('ADM-'));
+            if (!employees.length || hasOldIds) {
+                employees = INITIAL_EMPLOYEES.map(e => Object.assign({}, e));
+            } else {
+                employees = employees.map(e => {
+                    const src = byId[String(e.id)];
+                    if (src) {
+                        return Object.assign({}, e, {
+                            password: src.password,
+                            managerId: src.managerId || e.managerId || '',
+                            dept: src.dept || e.dept,
+                            role: src.role || e.role,
+                            name: src.name || e.name
+                        });
+                    }
+                    if (!e.password) e.password = '123456';
+                    return e;
+                });
+                // Ensure all INITIAL employees exist
+                INITIAL_EMPLOYEES.forEach(src => {
+                    if (!employees.some(e => String(e.id) === String(src.id))) {
+                        employees.push(Object.assign({}, src));
+                    }
+                });
+            }
+            try { localStorage.setItem('ark_employees', JSON.stringify(employees)); } catch (err) {}
+        })();
+        // Ensure passwords exist for legacy localStorage records
         // Ensure passwords exist for legacy localStorage records
         employees = employees.map(emp => ({ ...emp, password: emp.password || 'emp123' }));
         let leaves = JSON.parse(localStorage.getItem('ark_leaves')) || INITIAL_LEAVES;
@@ -2470,61 +2493,101 @@
         }
 
         // --- 4. AUTHENTICATION & PORTAL SWITCHING ---
-        function fillDemo() {
-            document.getElementById('login-empid').value = ADMIN_ACCOUNT.id;
-            document.getElementById('login-password').value = ADMIN_ACCOUNT.password;
-        }
+        function fillDemo() { /* demo removed */ }
 
         function authenticateUser(empId, password) {
-            const id = (empId || '').trim().toUpperCase();
-            const pass = password || '';
+            const id = String(empId || '').trim();
+            const pass = String(password || '');
+            const idLower = id.toLowerCase();
 
-            if (id === ADMIN_ACCOUNT.id && pass === ADMIN_ACCOUNT.password) {
-                return {
-                    id: ADMIN_ACCOUNT.id,
-                    name: ADMIN_ACCOUNT.name,
-                    email: ADMIN_ACCOUNT.email,
-                    role: 'admin',
-                    designation: ADMIN_ACCOUNT.designation,
-                    dept: ADMIN_ACCOUNT.dept,
-                    avatar: ADMIN_ACCOUNT.avatar
-                };
+            // Admin
+            if (id === ADMIN_ACCOUNT.id || idLower === String(ADMIN_ACCOUNT.id).toLowerCase()) {
+                if (pass === ADMIN_ACCOUNT.password) {
+                    return {
+                        id: ADMIN_ACCOUNT.id,
+                        name: ADMIN_ACCOUNT.name,
+                        email: ADMIN_ACCOUNT.email,
+                        role: 'admin',
+                        designation: ADMIN_ACCOUNT.designation,
+                        dept: ADMIN_ACCOUNT.dept,
+                        avatar: ADMIN_ACCOUNT.avatar
+                    };
+                }
             }
 
-            const matched = employees.find(emp => emp.id.toUpperCase() === id);
-            if (matched && (matched.password || 'emp123') === pass) {
-                return {
-                    id: matched.id,
-                    name: matched.name,
-                    email: matched.email,
-                    role: 'employee',
-                    dept: matched.dept,
-                    designation: matched.role,
-                    avatar: matched.avatar || '👨‍💼'
-                };
+            // Employee — match by id (case-insensitive), password default 123456
+            const matched = employees.find(emp => String(emp.id).toLowerCase() === idLower);
+            if (matched) {
+                const expected = String(matched.password != null && matched.password !== '' ? matched.password : '123456');
+                if (expected === pass) {
+                    return {
+                        id: matched.id,
+                        name: matched.name,
+                        email: matched.email,
+                        role: 'employee',
+                        dept: matched.dept,
+                        designation: matched.role,
+                        avatar: matched.avatar || '👨‍💼',
+                        managerId: matched.managerId || ''
+                    };
+                }
             }
             return null;
         }
 
-        function handleLogin(e) {
+        // Call Google Sheets backend (Code.gs)
+        async function apiPost(payload) {
+            if (!API_URL) throw new Error('API URL not set');
+            const res = await fetch(API_URL, {
+                method: 'POST',
+                // text/plain avoids CORS preflight on Apps Script
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            return data;
+        }
+
+        async function handleLogin(e) {
             e.preventDefault();
             const empId = document.getElementById('login-empid').value.trim();
             const password = document.getElementById('login-password').value;
 
-            showLoading('Authenticating workspace credentials...');
-            setTimeout(() => {
-                hideLoading();
-                const user = authenticateUser(empId, password);
-                if (!user) {
-                    showToast('Invalid Employee ID or password', 'error');
+            showLoading('Authenticating from Google Sheets...');
+
+            // 1) Try Sheets (Employees table via Code.gs)
+            try {
+                const result = await apiPost({ action: 'login', empId, password });
+                if (result && result.success && result.data && result.data.user) {
+                    const user = result.data.user;
+                    currentUser = user;
+                    localStorage.setItem('ark_session', JSON.stringify(currentUser));
+                    hideLoading();
+                    enterPortal(currentUser.role);
+                    showToast(`Welcome back, ${currentUser.name}! (Sheets)`, 'success');
                     return;
                 }
+                // Sheets responded but credentials wrong — stop (don't silent-fallback with wrong message)
+                if (result && result.success === false) {
+                    hideLoading();
+                    showToast(result.error || 'Invalid Employee ID or password', 'error');
+                    return;
+                }
+            } catch (err) {
+                console.warn('Sheets login failed, trying local fallback:', err);
+            }
 
-                currentUser = user;
-                localStorage.setItem('ark_session', JSON.stringify(currentUser));
-                enterPortal(currentUser.role);
-                showToast(`Welcome back, ${currentUser.name}!`, 'success');
-            }, 600);
+            // 2) Local fallback (offline / API down)
+            const user = authenticateUser(empId, password);
+            hideLoading();
+            if (!user) {
+                showToast('Invalid Employee ID or password', 'error');
+                return;
+            }
+            currentUser = user;
+            localStorage.setItem('ark_session', JSON.stringify(currentUser));
+            enterPortal(currentUser.role);
+            showToast(`Welcome back, ${currentUser.name}!`, 'success');
         }
 
         function restoreSession(user) {
@@ -2569,7 +2632,7 @@
             localStorage.removeItem('ark_session');
             document.getElementById('main-app').classList.add('hidden');
             document.getElementById('login-screen').classList.remove('hidden');
-            fillDemo();
+            // fillDemo removed
             showToast('Signed out of workspace', 'info');
         }
 
@@ -3795,7 +3858,7 @@
                     }
                 } else {
                     // Add
-                    const newId = `EMP-${String(employees.length + 1).padStart(3, '0')}`;
+                    const newId = String(100 + employees.length + 1);
                     const randomAvatar = AVATARS[Math.floor(Math.random() * AVATARS.length)];
                     employees.push({
                         id: newId,
@@ -4022,11 +4085,11 @@
         // --- 10. DEPARTMENTS DIRECTORY ---
         function renderAdminDepartments() {
             const depts = [
-                { name: 'Engineering', head: 'Alex Turner', count: employees.filter(e => e.dept === 'Engineering').length, budget: '$28,400', icon: 'fa-code' },
-                { name: 'Product & Design', head: 'Michael Chen', count: employees.filter(e => e.dept === 'Product & Design').length, budget: '$12,800', icon: 'fa-pen-ruler' },
-                { name: 'HR & Operations', head: 'Sarah Smith', count: employees.filter(e => e.dept === 'HR & Operations').length, budget: '$9,900', icon: 'fa-users-gear' },
-                { name: 'Sales & Marketing', head: 'Ayesha Khan', count: employees.filter(e => e.dept === 'Sales & Marketing').length, budget: '$14,200', icon: 'fa-bullhorn' },
-                { name: 'Finance', head: 'David Miller', count: employees.filter(e => e.dept === 'Finance').length, budget: '$8,500', icon: 'fa-chart-line' }
+                { name: 'Accounts', head: 'Dara Janwary', count: employees.filter(e => e.dept === 'Accounts').length, budget: '—', icon: 'fa-calculator' },
+                { name: 'Documentation', head: 'Faraz Ud Din', count: employees.filter(e => e.dept === 'Documentation').length, budget: '—', icon: 'fa-file-lines' },
+                { name: 'Dispatch', head: 'Maryam Siddiqui', count: employees.filter(e => e.dept === 'Dispatch').length, budget: '—', icon: 'fa-truck' },
+                { name: 'Operations', head: 'Iffrah Syed', count: employees.filter(e => e.dept === 'Operations').length, budget: '—', icon: 'fa-gears' },
+                { name: 'HR', head: 'Ayesha Fatima', count: employees.filter(e => e.dept === 'HR').length, budget: '—', icon: 'fa-users-gear' }
             ];
 
             const grid = document.getElementById('adm-departments-grid');
