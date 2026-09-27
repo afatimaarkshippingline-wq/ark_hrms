@@ -357,7 +357,7 @@
 
                 <div id="emp-table-container" class="rounded-3xl glass-card overflow-hidden">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-xs">
+                        <table class="w-full min-w-[650px] text-left border-collapse text-xs">
                             <thead>
                             <tr class="bg-slate-100/70 dark:bg-slate-800/60 border-b border-slate-200/80 dark:border-slate-700 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
                                 <th class="py-3.5 px-4">Employee</th>
@@ -407,7 +407,7 @@
                 </div>
                 <div class="rounded-3xl glass-card overflow-hidden">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-xs">
+                        <table class="w-full min-w-[650px] text-left border-collapse text-xs">
                             <thead>
                             <tr class="bg-slate-100/70 dark:bg-slate-800/60 border-b border-slate-200/80 dark:border-slate-700 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
                                 <th class="py-3.5 px-4">Staff</th>
@@ -425,11 +425,11 @@
 
             <!-- LEAVES -->
             <div id="adm-sec-leaves" class="space-y-6 hidden">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="p-5 rounded-2xl glass-card"><p class="text-xs font-bold text-slate-400 uppercase">Pending</p><h4 id="leave-kpi-pending" class="text-2xl font-black text-amber-500 font-heading mt-1">0</h4></div>
-                    <div class="p-5 rounded-2xl glass-card"><p class="text-xs font-bold text-slate-400 uppercase">Mgr Approved</p><h4 id="leave-kpi-manager-approved" class="text-2xl font-black text-blue-600 font-heading mt-1">0</h4></div>
-                    <div class="p-5 rounded-2xl glass-card"><p class="text-xs font-bold text-slate-400 uppercase">Approved</p><h4 id="leave-kpi-approved" class="text-2xl font-black text-emerald-600 font-heading mt-1">0</h4></div>
-                    <div class="p-5 rounded-2xl glass-card"><p class="text-xs font-bold text-slate-400 uppercase">Rejected</p><h4 id="leave-kpi-rejected" class="text-2xl font-black text-rose-500 font-heading mt-1">0</h4></div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="p-4 sm:p-5 rounded-2xl glass-card"><p class="text-xs font-bold text-slate-400 uppercase">Pending</p><h4 id="leave-kpi-pending" class="text-2xl font-black text-amber-500 font-heading mt-1">0</h4></div>
+                    <div class="p-4 sm:p-5 rounded-2xl glass-card"><p class="text-xs font-bold text-slate-400 uppercase">Mgr Approved</p><h4 id="leave-kpi-manager-approved" class="text-2xl font-black text-blue-600 font-heading mt-1">0</h4></div>
+                    <div class="p-4 sm:p-5 rounded-2xl glass-card"><p class="text-xs font-bold text-slate-400 uppercase">Approved</p><h4 id="leave-kpi-approved" class="text-2xl font-black text-emerald-600 font-heading mt-1">0</h4></div>
+                    <div class="p-4 sm:p-5 rounded-2xl glass-card"><p class="text-xs font-bold text-slate-400 uppercase">Rejected</p><h4 id="leave-kpi-rejected" class="text-2xl font-black text-rose-500 font-heading mt-1">0</h4></div>
                 </div>
 
                 <div class="rounded-3xl glass-card overflow-hidden">
@@ -447,7 +447,7 @@
                         </select>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-xs">
+                        <table class="w-full min-w-[650px] text-left border-collapse text-xs">
                             <thead>
                             <tr class="bg-slate-100/70 dark:bg-slate-800/60 border-b border-slate-200/80 dark:border-slate-700 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
                                 <th class="py-3.5 px-4">Applicant</th>
@@ -638,10 +638,10 @@
                     </div>
                 </div>
 
-                <div class="glass-card p-6 rounded-3xl">
-                    <h4 class="text-lg font-black font-heading text-slate-900 dark:text-white mb-4">Past 1-Week History</h4>
+                <div class="glass-card p-4 sm:p-6 rounded-3xl">
+                    <h4 class="text-base sm:text-lg font-black font-heading text-slate-900 dark:text-white mb-4">Past 1-Week History</h4>
                     <div class="overflow-x-auto rounded-2xl border border-slate-200/80 dark:border-slate-800">
-                        <table class="w-full text-left text-xs">
+                        <table class="w-full min-w-[600px] text-left text-xs">
                             <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-400 font-bold uppercase tracking-wider border-b border-slate-200 dark:border-slate-700">
                             <tr>
                                 <th class="py-3.5 px-4">Date</th>
@@ -683,7 +683,7 @@
 
                 <!-- Manager Subordinate Approvals Section -->
                 <div id="manager-leave-approvals-card" class="rounded-3xl glass-card overflow-hidden border-2 border-amber-500/30 hidden">
-                    <div class="p-5 border-b border-slate-200/80 dark:border-slate-700 bg-amber-500/5 flex items-center justify-between">
+                    <div class="p-4 sm:p-5 border-b border-slate-200/80 dark:border-slate-700 bg-amber-500/5 flex items-center justify-between">
                         <div>
                             <h4 class="text-sm font-bold font-heading text-slate-900 dark:text-white flex items-center gap-2">
                                 <i class="fa-solid fa-user-check text-amber-500"></i> Subordinate Leave Requests (Action Required)
@@ -693,7 +693,7 @@
                         <span id="mgr-pending-count-pill" class="px-2.5 py-1 rounded-full text-xs font-black bg-amber-500 text-white">0 Pending</span>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs">
+                        <table class="w-full min-w-[600px] text-left text-xs">
                             <thead>
                             <tr class="bg-slate-50 dark:bg-slate-800/50 text-slate-400 font-bold uppercase tracking-wider border-b border-slate-200 dark:border-slate-700">
                                 <th class="py-3 px-4">Subordinate</th>
@@ -710,11 +710,11 @@
                 </div>
 
                 <div class="rounded-3xl glass-card overflow-hidden">
-                    <div class="p-5 border-b border-slate-200/80 dark:border-slate-700">
+                    <div class="p-4 sm:p-5 border-b border-slate-200/80 dark:border-slate-700">
                         <h4 class="text-sm font-bold font-heading text-slate-900 dark:text-white">My Submitted Requests</h4>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs">
+                        <table class="w-full min-w-[550px] text-left text-xs">
                             <thead>
                             <tr class="bg-slate-50 dark:bg-slate-800/50 text-slate-400 font-bold uppercase tracking-wider border-b border-slate-200 dark:border-slate-700">
                                 <th class="py-3 px-4">Type</th>
@@ -760,6 +760,13 @@
                             <span id="profile-card-dept" class="text-sm font-extrabold text-slate-800 dark:text-white mt-1 block">—</span>
                         </div>
                     </div>
+
+                    <div id="profile-reporting-section" class="mt-6 pt-6 border-t border-slate-200/80 dark:border-slate-800">
+                        <h4 class="text-sm font-bold font-heading text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-sitemap text-blue-600"></i> Reporting Line & Organizational Hierarchy
+                        </h4>
+                        <div id="profile-reporting-content" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 text-xs"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -767,112 +774,112 @@
 </div>
 
 <!-- MODALS -->
-<div id="modal-employee" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm hidden">
-    <div class="w-full max-w-lg p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 mb-5">
-            <h3 id="modal-emp-title" class="text-lg font-bold font-heading text-slate-900 dark:text-white">Add New Employee</h3>
+<div id="modal-employee" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/50 backdrop-blur-md overflow-y-auto hidden">
+    <div class="w-full max-w-lg my-auto p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-y-auto max-h-[90vh]">
+        <div class="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-100 dark:border-slate-800 mb-4 sm:mb-5">
+            <h3 id="modal-emp-title" class="text-base sm:text-lg font-bold font-heading text-slate-900 dark:text-white">Add New Employee</h3>
             <button onclick="closeEmployeeModal()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 flex items-center justify-center"><i class="fa-solid fa-xmark text-sm"></i></button>
         </div>
-        <form id="form-employee" onsubmit="saveEmployeeSubmit(event)" class="space-y-4">
+        <form id="form-employee" onsubmit="saveEmployeeSubmit(event)" class="space-y-3 sm:space-y-4">
             <input type="hidden" id="form-emp-edit-id" value="">
-            <div class="grid grid-cols-2 gap-3">
-                <div class="col-span-2 sm:col-span-1">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
                     <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Full Name</label>
-                    <input type="text" id="form-emp-name" required placeholder="Employee full name" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs">
+                    <input type="text" id="form-emp-name" required placeholder="Employee full name" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm">
                 </div>
-                <div class="col-span-2 sm:col-span-1">
+                <div>
                     <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Email</label>
-                    <input type="email" id="form-emp-email" required placeholder="name@ark.com" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs">
+                    <input type="email" id="form-emp-email" required placeholder="name@ark.com" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm">
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Department</label>
-                    <select id="form-emp-dept" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs"></select>
+                    <select id="form-emp-dept" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm"></select>
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Role</label>
-                    <input type="text" id="form-emp-role" required placeholder="e.g. Manager" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs">
+                    <input type="text" id="form-emp-role" required placeholder="e.g. Manager" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm">
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Status</label>
-                    <select id="form-emp-status" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs">
+                    <select id="form-emp-status" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm">
                         <option value="Active">Active</option><option value="Away">Away</option>
                         <option value="On Leave">On Leave</option><option value="Inactive">Inactive</option>
                     </select>
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Manager ID</label>
-                    <input type="text" id="form-emp-manager" placeholder="e.g. 101" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs">
+                    <input type="text" id="form-emp-manager" placeholder="e.g. 101" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm">
                 </div>
             </div>
             <div>
                 <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Password <span class="text-slate-400 normal-case">(blank = 123456)</span></label>
-                <input type="text" id="form-emp-password" placeholder="123456" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs">
+                <input type="text" id="form-emp-password" placeholder="123456" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm">
             </div>
-            <div class="pt-4 flex justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
-                <button type="button" onclick="closeEmployeeModal()" class="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600">Cancel</button>
-                <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold">Save</button>
+            <div class="pt-3 sm:pt-4 flex justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
+                <button type="button" onclick="closeEmployeeModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300">Cancel</button>
+                <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-500/20">Save</button>
             </div>
         </form>
     </div>
 </div>
 
-<div id="modal-apply-leave" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm hidden">
-    <div class="w-full max-w-md p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 mb-5">
-            <h3 class="text-lg font-bold font-heading text-slate-900 dark:text-white">Apply for Leave</h3>
+<div id="modal-apply-leave" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/50 backdrop-blur-md overflow-y-auto hidden">
+    <div class="w-full max-w-md my-auto p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-y-auto max-h-[90vh]">
+        <div class="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-100 dark:border-slate-800 mb-4 sm:mb-5">
+            <h3 class="text-base sm:text-lg font-bold font-heading text-slate-900 dark:text-white">Apply for Leave</h3>
             <button onclick="closeApplyLeaveModal()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 flex items-center justify-center"><i class="fa-solid fa-xmark text-sm"></i></button>
         </div>
-        <form onsubmit="submitApplyLeave(event)" class="space-y-4">
+        <form onsubmit="submitApplyLeave(event)" class="space-y-3 sm:space-y-4">
             <div>
                 <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Leave Category</label>
-                <select id="leave-form-type" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs">
+                <select id="leave-form-type" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm">
                     <option value="Annual Leave">Annual Leave</option>
                     <option value="Sick Leave">Sick / Medical Leave</option>
                     <option value="Casual Leave">Casual / Personal</option>
                     <option value="Work From Home">Work From Home</option>
                 </select>
             </div>
-            <div class="grid grid-cols-2 gap-3">
-                <div><label class="block text-xs font-bold uppercase text-slate-500 mb-1">Start</label><input type="date" id="leave-form-start" required class="w-full p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs"></div>
-                <div><label class="block text-xs font-bold uppercase text-slate-500 mb-1">End</label><input type="date" id="leave-form-end" required class="w-full p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs"></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div><label class="block text-xs font-bold uppercase text-slate-500 mb-1">Start Date</label><input type="date" id="leave-form-start" required class="w-full p-2.5 sm:p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm"></div>
+                <div><label class="block text-xs font-bold uppercase text-slate-500 mb-1">End Date</label><input type="date" id="leave-form-end" required class="w-full p-2.5 sm:p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm"></div>
             </div>
             <div>
                 <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Reason</label>
-                <textarea id="leave-form-reason" rows="3" required placeholder="Brief note..." class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs"></textarea>
+                <textarea id="leave-form-reason" rows="3" required placeholder="Brief note explaining reason..." class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm"></textarea>
             </div>
             <div class="pt-3 flex justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
-                <button type="button" onclick="closeApplyLeaveModal()" class="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600">Cancel</button>
-                <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold">Submit</button>
+                <button type="button" onclick="closeApplyLeaveModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300">Cancel</button>
+                <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-500/20">Submit Request</button>
             </div>
         </form>
     </div>
 </div>
 
-<div id="modal-department" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm hidden">
-    <div class="w-full max-w-md p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 mb-5">
-            <h3 id="modal-dept-title" class="text-lg font-bold font-heading text-slate-900 dark:text-white">Add Department</h3>
+<div id="modal-department" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/50 backdrop-blur-md overflow-y-auto hidden">
+    <div class="w-full max-w-md my-auto p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-y-auto max-h-[90vh]">
+        <div class="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-100 dark:border-slate-800 mb-4 sm:mb-5">
+            <h3 id="modal-dept-title" class="text-base sm:text-lg font-bold font-heading text-slate-900 dark:text-white">Add Department</h3>
             <button onclick="closeDepartmentModal()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 flex items-center justify-center"><i class="fa-solid fa-xmark text-sm"></i></button>
         </div>
-        <form id="form-department" onsubmit="saveDepartmentSubmit(event)" class="space-y-4">
-            <div><label class="block text-xs font-bold uppercase text-slate-500 mb-1">Department Name</label><input type="text" id="form-dept-name" required placeholder="e.g. Logistics" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs"></div>
-            <div><label class="block text-xs font-bold uppercase text-slate-500 mb-1">Head ID</label><input type="text" id="form-dept-head-id" placeholder="e.g. 101" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs"></div>
-            <div><label class="block text-xs font-bold uppercase text-slate-500 mb-1">Head Name</label><input type="text" id="form-dept-head-name" placeholder="Manager full name" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs"></div>
-            <div><label class="block text-xs font-bold uppercase text-slate-500 mb-1">Budget</label><input type="text" id="form-dept-budget" placeholder="e.g. $10,000" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs"></div>
-            <div class="pt-4 flex justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
-                <button type="button" onclick="closeDepartmentModal()" class="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600">Cancel</button>
-                <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold">Save</button>
+        <form id="form-department" onsubmit="saveDepartmentSubmit(event)" class="space-y-3 sm:space-y-4">
+            <div><label class="block text-xs font-bold uppercase text-slate-500 mb-1">Department Name</label><input type="text" id="form-dept-name" required placeholder="e.g. Logistics" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm"></div>
+            <div><label class="block text-xs font-bold uppercase text-slate-500 mb-1">Head ID</label><input type="text" id="form-dept-head-id" placeholder="e.g. 101" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm"></div>
+            <div><label class="block text-xs font-bold uppercase text-slate-500 mb-1">Head Name</label><input type="text" id="form-dept-head-name" placeholder="Manager full name" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm"></div>
+            <div><label class="block text-xs font-bold uppercase text-slate-500 mb-1">Budget</label><input type="text" id="form-dept-budget" placeholder="e.g. $10,000" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm"></div>
+            <div class="pt-3 sm:pt-4 flex justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
+                <button type="button" onclick="closeDepartmentModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300">Cancel</button>
+                <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-500/20">Save</button>
             </div>
         </form>
     </div>
 </div>
 
-<div id="modal-avatar" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm hidden">
-    <div class="w-full max-w-sm p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl">
+<div id="modal-avatar" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/50 backdrop-blur-md overflow-y-auto hidden">
+    <div class="w-full max-w-sm my-auto p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-y-auto max-h-[90vh]">
         <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-4">
             <h4 class="text-base font-bold font-heading text-slate-900 dark:text-white">Pick Avatar</h4>
             <button onclick="closeAvatarPicker()" class="w-7 h-7 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 flex items-center justify-center"><i class="fa-solid fa-xmark text-xs"></i></button>
@@ -881,28 +888,28 @@
     </div>
 </div>
 
-<div id="modal-edit-profile" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm hidden">
-    <div class="w-full max-w-md p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl">
+<div id="modal-edit-profile" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/50 backdrop-blur-md overflow-y-auto hidden">
+    <div class="w-full max-w-md my-auto p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-y-auto max-h-[90vh]">
         <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-4">
             <h4 class="text-base font-bold font-heading text-slate-900 dark:text-white">Edit Profile</h4>
             <button onclick="closeEditProfileModal()" class="w-7 h-7 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 flex items-center justify-center"><i class="fa-solid fa-xmark text-xs"></i></button>
         </div>
-        <form onsubmit="saveProfileInfo(event)" class="space-y-3 text-xs">
-            <div><label class="block text-slate-500 font-semibold mb-1">Name</label><input type="text" id="edit-profile-name" required class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800"></div>
-            <div><label class="block text-slate-500 font-semibold mb-1">Email</label><input type="email" id="edit-profile-email" required class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800"></div>
-            <div><label class="block text-slate-500 font-semibold mb-1">Designation</label><input type="text" id="edit-profile-role" required class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800"></div>
-            <div class="pt-2 flex justify-end gap-2">
-                <button type="button" onclick="closeEditProfileModal()" class="px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 font-bold text-slate-600">Cancel</button>
-                <button type="submit" class="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold">Save</button>
+        <form onsubmit="saveProfileInfo(event)" class="space-y-3 text-xs sm:text-sm">
+            <div><label class="block text-slate-500 font-semibold mb-1">Name</label><input type="text" id="edit-profile-name" required class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800"></div>
+            <div><label class="block text-slate-500 font-semibold mb-1">Email</label><input type="email" id="edit-profile-email" required class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800"></div>
+            <div><label class="block text-slate-500 font-semibold mb-1">Designation</label><input type="text" id="edit-profile-role" required class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800"></div>
+            <div class="pt-3 flex justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
+                <button type="button" onclick="closeEditProfileModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 font-bold text-slate-600 dark:text-slate-300">Cancel</button>
+                <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-md shadow-blue-500/20">Save</button>
             </div>
         </form>
     </div>
 </div>
 
-<div id="modal-view-profile" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm hidden">
-    <div class="w-full max-w-2xl p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-y-auto max-h-[90vh]">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 mb-5">
-            <h3 class="text-lg font-bold font-heading text-slate-900 dark:text-white">Employee Profile Card</h3>
+<div id="modal-view-profile" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/50 backdrop-blur-md overflow-y-auto hidden">
+    <div class="w-full max-w-2xl my-auto p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-y-auto max-h-[90vh]">
+        <div class="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-100 dark:border-slate-800 mb-4 sm:mb-5">
+            <h3 class="text-base sm:text-lg font-bold font-heading text-slate-900 dark:text-white">Employee Profile Card</h3>
             <button onclick="closeProfileModal()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 flex items-center justify-center"><i class="fa-solid fa-xmark text-sm"></i></button>
         </div>
         <div id="modal-view-profile-content"></div>
@@ -914,7 +921,7 @@
     // ============================================================
     // CONFIG
     // ============================================================
-    const DEFAULT_API_URL = "https://script.google.com/macros/s/AKfycbykXwOgjeJXKJA_TfL-KTriUgPJ42IjTfngJ0DO99V7IsjIzmP335ouP1s4Sa_zUpwp/exec";
+    const DEFAULT_API_URL = "https://script.google.com/macros/s/AKfycbwotk4vnZoUtWaqtzYnaBs5bl_WKqRmlSY9Iss8DHTLKcvc80HPHTz6_7kqUAHsTolj/exec";
     let API_URL = localStorage.getItem('ark_backend_url') || DEFAULT_API_URL;
 
     const NJ_TIMEZONE = 'America/New_York';
@@ -1027,12 +1034,10 @@
             });
         }
 
-        // Restore session if exists
-        const saved = JSON.parse(localStorage.getItem('ark_session') || 'null');
-        if (saved) {
-            currentUser = saved;
-            enterPortal(saved.role);
-        }
+        // Always start at Login Screen on page load / site open
+        localStorage.removeItem('ark_session');
+        sessionStorage.clear();
+        currentUser = null;
     });
 
     // ============================================================
@@ -1275,11 +1280,14 @@
     function logout() {
         currentUser = null;
         localStorage.removeItem('ark_session');
+        sessionStorage.clear();
         document.getElementById('main-app').classList.add('hidden');
+        document.getElementById('panel-admin').classList.add('hidden');
+        document.getElementById('panel-employee').classList.add('hidden');
         document.getElementById('login-screen').classList.remove('hidden');
         document.getElementById('login-empid').value = '';
         document.getElementById('login-password').value = '';
-        showToast('Signed out', 'info');
+        showToast('Signed out successfully', 'info');
     }
 
     // ============================================================
@@ -1683,6 +1691,21 @@
         if (dot) dot.classList.remove('hidden');
     }
 
+    function formatDateNice(dateStr) {
+        if (!dateStr) return '—';
+        let s = String(dateStr).trim();
+        if (s.includes('T')) s = s.split('T')[0];
+        const parts = s.split('-');
+        if (parts.length === 3 && parts[0].length === 4) {
+            const year = parts[0], monthIdx = parseInt(parts[1], 10) - 1, day = parts[2];
+            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            if (monthIdx >= 0 && monthIdx < 12) {
+                return `${day} ${months[monthIdx]} ${year}`;
+            }
+        }
+        return s;
+    }
+
     function getLeaveAuditBadge(lv) {
         if (lv.status === 'Pending') {
             const mgrName = lv.managerName || (employees.find(e => String(e.id) === String(lv.managerId))?.name) || 'Manager';
@@ -1788,7 +1811,7 @@
                                     ${empLv.map(l => `
                                         <tr>
                                             <td class="py-2 px-3 font-bold text-slate-800 dark:text-white">${l.type}</td>
-                                            <td class="py-2 px-3 text-slate-600 dark:text-slate-300">${l.from} → ${l.to} (${l.days}d)</td>
+                                            <td class="py-2 px-3 text-slate-600 dark:text-slate-300">${formatDateNice(l.from)} → ${formatDateNice(l.to)} (${l.days}d)</td>
                                             <td class="py-2 px-3">${getLeaveAuditBadge(l)}</td>
                                         </tr>
                                     `).join('')}
@@ -1834,20 +1857,24 @@
         tbody.innerHTML = filtered.map(lv => {
             const emp = employees.find(e => String(e.id) === String(lv.empId));
             const applicantIsManager = emp && isManager(emp.id);
+            const hasNoManager = !emp || !emp.managerId || String(emp.managerId) === '1' || String(emp.managerId) === '';
 
             let decision = '';
-            if (lv.status === 'Pending' && applicantIsManager) {
+            if (lv.status === 'ManagerApproved') {
                 decision = `<div class="inline-flex items-center gap-2">
-                    <button onclick="adminFinalDecide('${lv.id}','Approved')" class="px-3 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs"><i class="fa-solid fa-check"></i> Approve</button>
-                    <button onclick="adminFinalDecide('${lv.id}','Rejected')" class="px-3 py-1 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs"><i class="fa-solid fa-xmark"></i> Reject</button>
+                    <button onclick="adminFinalDecide('${lv.id}','Approved')" class="px-3 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1 shadow-md shadow-emerald-500/20"><i class="fa-solid fa-check"></i> Final Approve</button>
+                    <button onclick="adminFinalDecide('${lv.id}','Rejected')" class="px-3 py-1 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs flex items-center gap-1 shadow-md shadow-rose-500/20"><i class="fa-solid fa-xmark"></i> Reject</button>
                 </div>`;
-            } else if (lv.status === 'ManagerApproved') {
+            } else if (lv.status === 'Pending' && (applicantIsManager || hasNoManager)) {
                 decision = `<div class="inline-flex items-center gap-2">
-                    <button onclick="adminFinalDecide('${lv.id}','Approved')" class="px-3 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs"><i class="fa-solid fa-check"></i> Approve</button>
-                    <button onclick="adminFinalDecide('${lv.id}','Rejected')" class="px-3 py-1 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs"><i class="fa-solid fa-xmark"></i> Reject</button>
+                    <button onclick="adminFinalDecide('${lv.id}','Approved')" class="px-3 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1 shadow-md shadow-emerald-500/20"><i class="fa-solid fa-check"></i> Approve</button>
+                    <button onclick="adminFinalDecide('${lv.id}','Rejected')" class="px-3 py-1 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs flex items-center gap-1 shadow-md shadow-rose-500/20"><i class="fa-solid fa-xmark"></i> Reject</button>
                 </div>`;
+            } else if (lv.status === 'Pending') {
+                const mgrName = lv.managerName || (employees.find(e => String(e.id) === String(lv.managerId))?.name) || 'Manager';
+                decision = `<span class="text-xs text-amber-600 font-bold bg-amber-50 dark:bg-amber-950/40 px-2.5 py-1 rounded-full border border-amber-200 dark:border-amber-800"><i class="fa-solid fa-clock text-amber-500 mr-1"></i> Awaiting Manager (${mgrName})</span>`;
             } else {
-                decision = `<span class="text-xs text-slate-400 italic">—</span>`;
+                decision = `<span class="text-xs text-slate-400 italic">Decided</span>`;
             }
 
             return `
@@ -1857,7 +1884,7 @@
                         <div class="text-[10px] text-slate-400 font-mono">${lv.empId}</div>
                     </td>
                     <td class="py-3.5 px-4"><span class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">${lv.type}</span></td>
-                    <td class="py-3.5 px-4 font-semibold text-slate-700 dark:text-slate-300">${lv.from} → ${lv.to} (${lv.days}d)</td>
+                    <td class="py-3.5 px-4 font-semibold text-slate-700 dark:text-slate-300">${formatDateNice(lv.from)} → ${formatDateNice(lv.to)} (${lv.days}d)</td>
                     <td class="py-3.5 px-4 text-slate-500 max-w-xs truncate">${lv.reason||'—'}</td>
                     <td class="py-3.5 px-4">${getLeaveAuditBadge(lv)}</td>
                     <td class="py-3.5 px-4 text-right">${decision}</td>
@@ -2113,40 +2140,371 @@
         renderNotificationsMenu();
     }
 
+    function updateEmpAttendanceUI() {
+        const btnIn = document.getElementById('btn-punch-checkin');
+        const btnBrk = document.getElementById('btn-punch-break');
+        const btnStep = document.getElementById('btn-punch-stepaway');
+        const btnRet = document.getElementById('btn-punch-return');
+        const btnOut = document.getElementById('btn-punch-checkout');
+        const hint = document.getElementById('emp-action-hint');
+        const pill = document.getElementById('emp-status-pill');
+        const summaryBox = document.getElementById('checkout-summary-box');
+        const sessionBox = document.getElementById('session-active-box');
+        if (!btnIn) return;
+
+        // Check if employee is on approved leave today
+        const todayNJ = getNJDateString();
+        const activeLeave = leaves.find(l =>
+            String(l.empId) === String(currentUser?.id) &&
+            l.status === 'Approved' &&
+            todayNJ >= l.from && todayNJ <= l.to
+        );
+        const me = employees.find(e => String(e.id) === String(currentUser?.id));
+        const isOnLeave = (me && me.status === 'On Leave') || activeLeave;
+
+        if (isOnLeave) {
+            btnIn.disabled = btnBrk.disabled = btnStep.disabled = btnRet.disabled = btnOut.disabled = true;
+            const leaveDetail = activeLeave ? `${formatDateNice(activeLeave.from)} to ${formatDateNice(activeLeave.to)}` : 'Today';
+            if (hint) hint.innerHTML = `<span class="text-purple-600 font-extrabold flex items-center gap-1.5"><i class="fa-solid fa-plane-departure text-purple-600"></i> You are currently on Approved Leave (${leaveDetail}). Check-In is disabled.</span>`;
+            if (pill) {
+                pill.innerText = "On Leave";
+                pill.className = "px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-purple-100 text-purple-700 dark:bg-purple-950/40 dark:text-purple-300 border border-purple-300 dark:border-purple-800";
+            }
+            if (summaryBox) summaryBox.classList.add('hidden');
+            if (sessionBox) sessionBox.classList.remove('hidden');
+            const sessionNote = document.getElementById('shift-active-session-note');
+            if (sessionNote) sessionNote.innerText = `On Approved Leave · ${leaveDetail}`;
+            renderEmpShiftProgress();
+            return;
+        }
+
+        btnIn.disabled = btnBrk.disabled = btnStep.disabled = btnRet.disabled = btnOut.disabled = true;
+
+        switch (employeeAttendanceState) {
+            case 'out':
+                btnIn.disabled = false;
+                if (hint) hint.innerText = "Please Check In to start your workday shift.";
+                if (pill) {
+                    pill.innerText = "Not Checked In";
+                    pill.className = "px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300";
+                }
+                if (summaryBox) summaryBox.classList.add('hidden');
+                if (sessionBox) sessionBox.classList.remove('hidden');
+                break;
+            case 'working':
+                btnBrk.disabled = btnStep.disabled = btnOut.disabled = false;
+                if (hint) hint.innerText = "You are currently Checked In & Active.";
+                if (pill) {
+                    pill.innerText = "Working · Active";
+                    pill.className = "px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300";
+                }
+                if (summaryBox) summaryBox.classList.add('hidden');
+                if (sessionBox) sessionBox.classList.remove('hidden');
+                break;
+            case 'break':
+                btnRet.disabled = btnOut.disabled = false;
+                if (hint) hint.innerText = "On break. Click 'Return Back' to resume (break time will be deducted).";
+                if (pill) {
+                    pill.innerText = "On Break";
+                    pill.className = "px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300";
+                }
+                if (summaryBox) summaryBox.classList.add('hidden');
+                if (sessionBox) sessionBox.classList.remove('hidden');
+                break;
+            case 'away':
+                btnRet.disabled = btnOut.disabled = false;
+                if (hint) hint.innerText = "Stepped away. Click 'Return Back' to resume (away time will be deducted).";
+                if (pill) {
+                    pill.innerText = "Stepped Away";
+                    pill.className = "px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-purple-100 text-purple-700 dark:bg-purple-950/40 dark:text-purple-300";
+                }
+                if (summaryBox) summaryBox.classList.add('hidden');
+                if (sessionBox) sessionBox.classList.remove('hidden');
+                break;
+            case 'checkedOut':
+                if (hint) hint.innerText = "Your workday has concluded.";
+                if (pill) {
+                    pill.innerText = "Shift Completed";
+                    pill.className = "px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300";
+                }
+                if (summaryBox) summaryBox.classList.remove('hidden');
+                if (sessionBox) sessionBox.classList.add('hidden');
+                renderCheckoutSummary();
+                break;
+        }
+        renderEmpShiftProgress();
+    }
+
+    function computeWorkingMinutes() {
+        if (!punchLog.checkIn || employeeAttendanceState === 'out' || employeeAttendanceState === 'checkedOut') {
+            return shiftSession.workingMinutes || 0;
+        }
+        const nowMs = Date.now();
+        let breakMs = 0;
+        if (punchLog.breaks && Array.isArray(punchLog.breaks)) {
+            punchLog.breaks.forEach(b => {
+                if (b.start && b.end) breakMs += (b.end - b.start);
+                else if (b.start) breakMs += (nowMs - b.start);
+            });
+        }
+        if (punchLog.breakStart) breakMs += (nowMs - punchLog.breakStart);
+        if (punchLog.awayStart) breakMs += (nowMs - punchLog.awayStart);
+        const workingMs = Math.max(0, nowMs - punchLog.checkIn - breakMs);
+        return Math.floor(workingMs / 60000);
+    }
+
+    function renderEmpShiftProgress() {
+        const pctEl = document.getElementById('shift-progress-percent');
+        const fillEl = document.getElementById('shift-progress-fill');
+        const completedEl = document.getElementById('shift-progress-completed');
+        const remainingEl = document.getElementById('shift-progress-remaining');
+        if (!pctEl || !fillEl) return;
+
+        if (employeeAttendanceState === 'out') {
+            pctEl.innerText = '0%';
+            fillEl.style.width = '0%';
+            if (completedEl) completedEl.innerText = '0h 00m completed';
+            if (remainingEl) remainingEl.innerText = '10h 00m remaining';
+        } else if (employeeAttendanceState === 'checkedOut') {
+            const mins = shiftSession.workingMinutes || 0;
+            const pct = Math.min(150, Math.round((mins / TARGET_WORK_MINUTES) * 100));
+            pctEl.innerText = `${pct}%`;
+            fillEl.style.width = `${Math.min(100, pct)}%`;
+            const h = Math.floor(mins/60), m = mins%60;
+            if (completedEl) completedEl.innerText = `${h}h ${String(m).padStart(2,'0')}m completed`;
+            if (remainingEl) remainingEl.innerText = pct >= 100 ? 'Goal Achieved!' : `${100-pct}% remaining`;
+        } else {
+            const mins = computeWorkingMinutes();
+            const pct = Math.min(100, Math.round((mins / TARGET_WORK_MINUTES) * 100));
+            pctEl.innerText = `${pct}%`;
+            fillEl.style.width = `${pct}%`;
+            const h = Math.floor(mins/60), m = mins%60;
+            if (completedEl) completedEl.innerText = `${h}h ${String(m).padStart(2,'0')}m completed`;
+            const rem = Math.max(0, TARGET_WORK_MINUTES - mins);
+            const rh = Math.floor(rem/60), rm = rem%60;
+            if (remainingEl) remainingEl.innerText = `${rh}h ${String(rm).padStart(2,'0')}m remaining`;
+        }
+    }
+
+    function renderEmpWeeklyHistory() {
+        const tbody = document.getElementById('emp-weekly-history-tbody');
+        if (!tbody) return;
+        const avatar = currentUser?.avatar || '👨‍💼';
+        const name = currentUser?.name || 'Employee';
+        if (!mockWeeklyCheckIns.length) {
+            tbody.innerHTML = `<tr><td colspan="7" class="py-6 text-center text-slate-400">No attendance history.</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = mockWeeklyCheckIns.map(item => `
+            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40">
+                <td class="py-3 px-4 font-semibold text-slate-800 dark:text-white"><i class="fa-regular fa-calendar text-blue-500 mr-2"></i>${item.date}</td>
+                <td class="py-3 px-4"><div class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 flex items-center justify-center text-base">${avatar}</span><span class="font-bold text-slate-800 dark:text-white">${name}</span></div></td>
+                <td class="py-3 px-4 font-bold text-emerald-600">${item.checkIn}</td>
+                <td class="py-3 px-4 font-bold text-rose-500">${item.checkOut}</td>
+                <td class="py-3 px-4 font-semibold text-amber-600">${item.breakDeducted || '0h 00m'}</td>
+                <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">${item.completed}</td>
+                <td class="py-3 px-4"><span class="inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${item.onTime ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}">${item.status}</span></td>
+            </tr>
+        `).join('');
+    }
+
+    function renderCheckoutSummary() {
+        if (!document.getElementById('summary-checkin-time')) return;
+        const mins = shiftSession.workingMinutes || 0;
+        const h = Math.floor(mins/60), m = mins%60;
+        const bk = shiftSession.breakMinutes || 0;
+        const bkh = Math.floor(bk/60), bkm = bk%60;
+        document.getElementById('summary-checkin-time').innerText = shiftSession.checkInTime || '—';
+        document.getElementById('summary-checkout-time').innerText = shiftSession.checkOutTime || '—';
+        document.getElementById('summary-break-deducted').innerText = `${bkh}h ${String(bkm).padStart(2,'0')}m`;
+        document.getElementById('summary-completed-hours').innerText = `${h}h ${String(m).padStart(2,'0')}m`;
+    }
+
+    function empPunchAction(action) {
+        const todayNJ = getNJDateString();
+        const activeLeave = leaves.find(l =>
+            String(l.empId) === String(currentUser?.id) &&
+            l.status === 'Approved' &&
+            todayNJ >= l.from && todayNJ <= l.to
+        );
+        const me = employees.find(e => String(e.id) === String(currentUser?.id));
+        if ((me && me.status === 'On Leave') || activeLeave) {
+            showToast('You are currently on Approved Leave. Punching is disabled.', 'error');
+            return;
+        }
+
+        showLoading(`Logging ${action}...`);
+
+        setTimeout(() => {
+            hideLoading();
+            const now = Date.now();
+            const timeStr = getNJTimeString();
+            const dateStr = getNJDateString();
+
+            if (!punchLog.checkIn) punchLog = { checkIn:null, breaks:[], breakStart:null, awayStart:null };
+
+            if (action === 'Check In') {
+                employeeAttendanceState = 'working';
+                shiftSession.checkInTime = timeStr;
+                shiftSession.punctuality = computePunctuality();
+                shiftSession.workingMinutes = 0;
+                shiftSession.breakMinutes = 0;
+                shiftSession.isCompleted = false;
+                punchLog = { checkIn:now, breaks:[], breakStart:null, awayStart:null };
+                localStorage.setItem('ark_emp_punch_log', JSON.stringify(punchLog));
+            } else if (action === 'Break') {
+                employeeAttendanceState = 'break';
+                punchLog.breakStart = now;
+                localStorage.setItem('ark_emp_punch_log', JSON.stringify(punchLog));
+            } else if (action === 'Step Away') {
+                employeeAttendanceState = 'away';
+                punchLog.awayStart = now;
+                localStorage.setItem('ark_emp_punch_log', JSON.stringify(punchLog));
+            } else if (action === 'Return Back') {
+                if (punchLog.breakStart) { punchLog.breaks.push({ start:punchLog.breakStart, end:now }); punchLog.breakStart = null; }
+                if (punchLog.awayStart) { punchLog.breaks.push({ start:punchLog.awayStart, end:now }); punchLog.awayStart = null; }
+                employeeAttendanceState = 'working';
+                localStorage.setItem('ark_emp_punch_log', JSON.stringify(punchLog));
+            } else if (action === 'Check Out') {
+                if (punchLog.breakStart) { punchLog.breaks.push({ start:punchLog.breakStart, end:now }); punchLog.breakStart = null; }
+                if (punchLog.awayStart) { punchLog.breaks.push({ start:punchLog.awayStart, end:now }); punchLog.awayStart = null; }
+                const checkInMs = punchLog.checkIn || now;
+                let breakMs = 0;
+                punchLog.breaks.forEach(b => { breakMs += (b.end - b.start); });
+                const workingMs = Math.max(0, now - checkInMs - breakMs);
+                shiftSession.workingMinutes = Math.floor(workingMs / 60000);
+                shiftSession.breakMinutes = Math.floor(breakMs / 60000);
+                shiftSession.checkOutTime = timeStr;
+                shiftSession.isCompleted = true;
+                employeeAttendanceState = 'checkedOut';
+                localStorage.setItem('ark_emp_punch_log', JSON.stringify(punchLog));
+            }
+
+            localStorage.setItem('ark_emp_shift', JSON.stringify(shiftSession));
+
+            if (action === 'Check Out') {
+                const mins = shiftSession.workingMinutes || 0;
+                const h = Math.floor(mins/60), m = mins%60;
+                const bkMins = shiftSession.breakMinutes || 0;
+                const bkh = Math.floor(bkMins/60), bkm = bkMins%60;
+                const todayLabel = `Today (${dateStr.slice(5)})`;
+                const todayRec = {
+                    date: todayLabel,
+                    checkIn: shiftSession.checkInTime || '—',
+                    checkOut: timeStr,
+                    breakDeducted: `${bkh}h ${String(bkm).padStart(2,'0')}m`,
+                    completed: `${h}h ${String(m).padStart(2,'0')}m`,
+                    status: shiftSession.punctuality === 'Late Arrival' ? 'Late Arrival' : 'Completed',
+                    onTime: shiftSession.punctuality !== 'Late Arrival'
+                };
+                const idx = mockWeeklyCheckIns.findIndex(i => i.date.includes('Today'));
+                if (idx !== -1) mockWeeklyCheckIns[idx] = todayRec;
+                else mockWeeklyCheckIns.unshift(todayRec);
+                localStorage.setItem('ark_emp_weekly_checkins', JSON.stringify(mockWeeklyCheckIns));
+            }
+
+            timesheets.unshift({
+                id: `TS-LOCAL-${Date.now()}`,
+                empName: currentUser.name,
+                empId: currentUser.id,
+                action,
+                time: timeStr,
+                date: dateStr,
+                totalHours: action === 'Check Out' ? `${Math.floor((shiftSession.workingMinutes||0)/60)}h ${(shiftSession.workingMinutes||0)%60}m` : 'In Progress',
+                punctuality: shiftSession.punctuality || 'On Time'
+            });
+
+            const meEmp = employees.find(e => String(e.id) === String(currentUser.id));
+            if (meEmp && meEmp.status !== 'On Leave') {
+                meEmp.status = employeeAttendanceState === 'working' ? 'Active'
+                    : (employeeAttendanceState === 'break' || employeeAttendanceState === 'away') ? 'Away'
+                    : employeeAttendanceState === 'checkedOut' ? 'Inactive' : meEmp.status;
+                persistState();
+            }
+
+            updateEmpAttendanceUI();
+            renderEmpWeeklyHistory();
+
+            if (action === 'Check Out') {
+                const mins = shiftSession.workingMinutes || 0;
+                showToast(`Shift finalized! Net: ${Math.floor(mins/60)}h ${mins%60}m`, 'success');
+            } else {
+                showToast(`${action} recorded at ${timeStr}`, 'success');
+            }
+
+            // Background sync
+            apiPost({ action:'attendance', empId:currentUser.id, type:action, date:dateStr, time:timeStr }).catch(() => {});
+        }, 400);
+    }
+
     function renderEmployeeTeam() {
         const container = document.getElementById('emp-team-grid');
         if (!container || !currentUser) return;
 
         const subs = employees.filter(e => String(e.managerId) === String(currentUser.id));
-        const deptColleagues = employees.filter(e => e.dept === currentUser.dept && String(e.id) !== String(currentUser.id));
         const isMgr = subs.length > 0 || isManager(currentUser.id);
 
-        const displayList = isMgr ? subs : deptColleagues;
+        if (isMgr) {
+            if (!subs.length) {
+                container.innerHTML = `<div class="col-span-full p-8 text-center text-slate-400 glass-card rounded-3xl">No direct subordinates assigned to you yet.</div>`;
+                return;
+            }
 
-        if (!displayList.length) {
-            container.innerHTML = `<div class="col-span-full p-8 text-center text-slate-400 glass-card rounded-3xl">No team members or direct reports assigned.</div>`;
-            return;
-        }
-
-        container.innerHTML = displayList.map(emp => `
-            <div class="glass-card p-5 rounded-3xl flex flex-col justify-between hover:border-blue-500/50 transition-all">
-                <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 flex items-center justify-center text-2xl font-bold">${emp.avatar || '👨‍💼'}</span>
-                        <span class="inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${getBadgeClasses(emp.status)}">${emp.status}</span>
+            container.innerHTML = subs.map(emp => `
+                <div class="glass-card p-5 rounded-3xl flex flex-col justify-between hover:border-blue-500/50 transition-all">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 flex items-center justify-center text-2xl font-bold">${emp.avatar || '👨‍💼'}</span>
+                            <span class="inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${getBadgeClasses(emp.status)}">${emp.status}</span>
+                        </div>
+                        <h4 class="text-base font-bold font-heading text-slate-900 dark:text-white leading-tight">${emp.name}</h4>
+                        <p class="text-xs text-slate-500 font-medium mt-0.5">${emp.role || 'Staff Member'}</p>
+                        <div class="mt-2 text-[11px] text-slate-400 font-mono">ID: ${emp.id} · ${emp.dept}</div>
                     </div>
-                    <h4 class="text-base font-bold font-heading text-slate-900 dark:text-white leading-tight">${emp.name}</h4>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">${emp.role || 'Staff Member'}</p>
-                    <div class="mt-2 text-[11px] text-slate-400 font-mono">ID: ${emp.id} · ${emp.dept}</div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                        <span class="text-[11px] text-slate-400 font-semibold">Joined: ${emp.joined || '—'}</span>
+                        <button onclick="openEmployeeProfileModal('${emp.id}')" class="px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 font-bold text-xs hover:bg-blue-600 hover:text-white transition-colors">
+                            <i class="fa-solid fa-address-card mr-1"></i> Profile
+                        </button>
+                    </div>
                 </div>
-                <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                    <span class="text-[11px] text-slate-400 font-semibold">Joined: ${emp.joined || '—'}</span>
-                    <button onclick="openEmployeeProfileModal('${emp.id}')" class="px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 font-bold text-xs hover:bg-blue-600 hover:text-white transition-colors">
-                        <i class="fa-solid fa-address-card mr-1"></i> Profile
-                    </button>
+            `).join('');
+        } else {
+            // Subordinate view: Show their Manager & Reporting Line Card
+            const manager = currentUser.managerId ? employees.find(m => String(m.id) === String(currentUser.managerId)) : null;
+            const managerName = manager ? manager.name : 'Super Administrator';
+            const managerRole = manager ? manager.role : 'Super Administrator';
+            const managerDept = manager ? manager.dept : 'Executive';
+            const managerAvatar = manager ? (manager.avatar || '👨‍💼') : '👨‍💼';
+            const managerEmail = manager ? manager.email : 'admin@ark.com';
+
+            container.innerHTML = `
+                <div class="col-span-full space-y-6">
+                    <div class="p-6 rounded-3xl glass-card border-2 border-blue-500/20">
+                        <div class="flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-blue-600 mb-4">
+                            <i class="fa-solid fa-sitemap"></i> Your Reporting Manager & Hierarchy
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 p-5 rounded-2xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200/50 dark:border-blue-800/40">
+                            <div class="flex items-center gap-4">
+                                <span class="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 flex items-center justify-center text-3xl shadow-md">${managerAvatar}</span>
+                                <div>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-blue-600">Reporting Lead</span>
+                                    <h4 class="text-lg font-black font-heading text-slate-900 dark:text-white mt-0.5">${managerName}</h4>
+                                    <p class="text-xs text-slate-500 font-medium">${managerRole} · <span class="font-semibold text-slate-700 dark:text-slate-300">${managerDept}</span></p>
+                                    <p class="text-[11px] text-slate-400 mt-1"><i class="fa-regular fa-envelope mr-1"></i>${managerEmail}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs font-bold text-slate-600 dark:text-slate-300 bg-white/80 dark:bg-slate-800/80 px-4 py-2.5 rounded-xl border border-slate-200/80 dark:border-slate-700">
+                                <span>Reporting Line:</span>
+                                <span class="text-blue-600 font-extrabold">${currentUser.name}</span>
+                                <i class="fa-solid fa-arrow-right text-xs text-slate-400"></i>
+                                <span class="text-emerald-600 font-extrabold">${managerName}</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }
     }
 
     function renderEmployeeLeaves() {
@@ -2162,7 +2520,7 @@
                 tbodyMine.innerHTML = mine.map(lv => `
                     <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40">
                         <td class="py-3 px-4 font-bold text-slate-800 dark:text-white">${lv.type}</td>
-                        <td class="py-3 px-4 font-semibold text-slate-600 dark:text-slate-300">${lv.from} → ${lv.to} (${lv.days}d)</td>
+                        <td class="py-3 px-4 font-semibold text-slate-600 dark:text-slate-300">${formatDateNice(lv.from)} → ${formatDateNice(lv.to)} (${lv.days}d)</td>
                         <td class="py-3 px-4 text-slate-500 max-w-xs truncate">${lv.reason || '—'}</td>
                         <td class="py-3 px-4">${getLeaveAuditBadge(lv)}</td>
                     </tr>
@@ -2220,7 +2578,7 @@
                                     ${lv.empName} <span class="text-[10px] text-slate-400 block font-mono">${lv.empId}</span>
                                 </td>
                                 <td class="py-3.5 px-4 font-bold text-blue-600">${lv.type}</td>
-                                <td class="py-3.5 px-4 font-semibold text-slate-700 dark:text-slate-300">${lv.from} → ${lv.to} (${lv.days}d)</td>
+                                <td class="py-3.5 px-4 font-semibold text-slate-700 dark:text-slate-300">${formatDateNice(lv.from)} → ${formatDateNice(lv.to)} (${lv.days}d)</td>
                                 <td class="py-3.5 px-4 text-slate-500 max-w-xs truncate">${lv.reason || '—'}</td>
                                 <td class="py-3.5 px-4">${getLeaveAuditBadge(lv)}</td>
                                 <td class="py-3.5 px-4 text-right">${actionBtn}</td>
@@ -2243,6 +2601,49 @@
         document.getElementById('profile-card-email').innerText = currentUser.email;
         document.getElementById('profile-card-dept').innerText = currentUser.dept || '—';
         document.getElementById('profile-card-avatar').innerText = currentUser.avatar || '👨‍💼';
+
+        // Reporting Line & Management
+        const container = document.getElementById('profile-reporting-content');
+        if (container) {
+            const manager = currentUser.managerId ? employees.find(m => String(m.id) === String(currentUser.managerId)) : null;
+            const managerName = manager ? manager.name : 'Super Administrator';
+            const managerRole = manager ? manager.role : 'Super Administrator';
+            const managerDept = manager ? manager.dept : 'Executive / HR';
+            const managerAvatar = manager ? (manager.avatar || '👨‍💼') : '👨‍💼';
+
+            const subs = employees.filter(e => String(e.managerId) === String(currentUser.id));
+
+            container.innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-3.5 rounded-xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700">
+                        <div class="flex items-center gap-3">
+                            <span class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 flex items-center justify-center text-xl font-bold">${managerAvatar}</span>
+                            <div>
+                                <span class="text-[10px] font-extrabold uppercase text-blue-600 tracking-wider block">Your Direct Manager / Lead</span>
+                                <strong class="text-sm font-black text-slate-900 dark:text-white block">${managerName}</strong>
+                                <span class="text-[11px] text-slate-500 block">${managerRole} · ${managerDept}</span>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-[10px] font-extrabold bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300">Reporting Line</span>
+                    </div>
+
+                    ${subs.length > 0 ? `
+                        <div class="pt-2">
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 block mb-2">Direct Subordinates Reporting To You (${subs.length})</span>
+                            <div class="flex flex-wrap gap-2">
+                                ${subs.map(s => `
+                                    <span onclick="openEmployeeProfileModal('${s.id}')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-xs font-bold cursor-pointer hover:scale-105 transition-transform">
+                                        <span>${s.avatar || '👨‍💼'}</span>
+                                        <span>${s.name}</span>
+                                        <span class="text-[10px] text-slate-400 font-mono">(${s.id})</span>
+                                    </span>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
     }
 
     function openApplyLeaveModal() { document.getElementById('modal-apply-leave').classList.remove('hidden'); }
