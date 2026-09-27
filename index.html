@@ -1438,7 +1438,7 @@
                             <p class="text-xs text-slate-500">Workforce distribution, department heads, and headcount
                                 budget.</p>
                         </div>
-                        <button onclick="showToast('Department creator initialized', 'info')"
+                        <button onclick="openAddDepartmentModal()"
                             class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold flex items-center gap-1.5 transition-all">
                             <i class="fa-solid fa-plus"></i> Add Department
                         </button>
@@ -2108,6 +2108,16 @@
                             <option value="Inactive">Inactive</option>
                         </select>
                     </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Reports To (Manager ID)</label>
+                        <input type="text" id="form-emp-manager" placeholder="e.g. 101 or leave empty"
+                            class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-800 dark:text-slate-100 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Password <span class="text-slate-400 normal-case">(blank = 123456)</span></label>
+                        <input type="text" id="form-emp-password" placeholder="123456"
+                            class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-800 dark:text-slate-100 focus:outline-none">
+                    </div>
 
                     <div
                         class="pt-4 flex items-center justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
@@ -2361,15 +2371,13 @@
         })();
         // Ensure passwords exist for legacy localStorage records
         // Ensure passwords exist for legacy localStorage records
-        employees = employees.map(emp => ({ ...emp, password: emp.password || 'emp123' }));
-        let leaves = JSON.parse(localStorage.getItem('ark_leaves')) || INITIAL_LEAVES;
-        let timesheets = JSON.parse(localStorage.getItem('ark_timesheets')) || INITIAL_TIMESHEETS;
+        employees = employees.map(emp => ({ ...emp, password: emp.password || '123456' }));
+        // Sheets = source of truth. Do NOT seed fake leaves/timesheets.
+        let leaves = JSON.parse(localStorage.getItem('ark_leaves') || '[]');
+        let timesheets = JSON.parse(localStorage.getItem('ark_timesheets') || '[]');
         let currentAnnouncement = localStorage.getItem('ark_announcement') || "Welcome to ARK Enterprise HRMS! All workforce tools and attendance services are active.";
-        let notifications = [
-            { text: "David Miller submitted an Annual Leave request (5 days).", time: "10 mins ago", type: "leave" },
-            { text: "Fatima Zahra checked in today at 09:24 AM.", time: "1 hr ago", type: "punch" },
-            { text: "Automated payroll forecast updated for September.", time: "3 hrs ago", type: "system" }
-        ];
+        let notifications = JSON.parse(localStorage.getItem('ark_notifications') || '[]');
+        let sheetsSynced = false;
 
         function persistState() {
             localStorage.setItem('ark_employees', JSON.stringify(employees));
@@ -2536,16 +2544,20 @@
         }
 
         // Call Google Sheets backend (Code.gs)
-        async function apiPost(payload) {
+        async function apiPost(payload, loadingMsg) {
             if (!API_URL) throw new Error('API URL not set');
-            const res = await fetch(API_URL, {
-                method: 'POST',
-                // text/plain avoids CORS preflight on Apps Script
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify(payload)
-            });
-            const data = await res.json();
-            return data;
+            if (loadingMsg) showLoading(loadingMsg);
+            try {
+                const res = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                return data;
+            } finally {
+                if (loadingMsg) hideLoading();
+            }
         }
 
         async function handleLogin(e) {
@@ -2595,10 +2607,80 @@
             enterPortal(user.role);
         }
 
-        function enterPortal(role) {
+        async function syncFromSheets() {
+            if (!API_URL) return false;
+            try {
+                const result = await apiPost({
+                    action: 'syncAll',
+                    requesterId: currentUser ? currentUser.id : '',
+                    role: currentUser ? currentUser.role : ''
+                });
+                if (!result || !result.success || !result.data) return false;
+
+                const d = result.data;
+
+                // Employees from sheet (keep passwords only if present; strip already done on server)
+                if (Array.isArray(d.employees)) {
+                    // Merge with local password if sheet omitted it
+                    const passMap = {};
+                    employees.forEach(e => { if (e.password) passMap[String(e.id)] = e.password; });
+                    INITIAL_EMPLOYEES.forEach(e => { if (e.password) passMap[String(e.id)] = e.password; });
+                    employees = d.employees.map(e => {
+                        const id = String(e.id);
+                        return Object.assign({}, e, {
+                            id: id,
+                            password: e.password || passMap[id] || '123456',
+                            managerId: e.managerId ? String(e.managerId) : ''
+                        });
+                    });
+                }
+
+                // Leaves & attendance — exact sheet data (empty sheet => empty UI)
+                if (Array.isArray(d.leaves)) {
+                    leaves = d.leaves.map(l => Object.assign({}, l, {
+                        empId: String(l.empId),
+                        id: String(l.id)
+                    }));
+                } else {
+                    leaves = [];
+                }
+
+                if (Array.isArray(d.attendance)) {
+                    timesheets = d.attendance.map(a => ({
+                        id: String(a.id || ''),
+                        empId: String(a.empId || ''),
+                        empName: a.empName || '',
+                        action: a.action || '',
+                        time: a.time || '',
+                        date: a.date || '',
+                        totalHours: a.totalHours || '',
+                        punctuality: a.punctuality || 'On Time'
+                    }));
+                } else {
+                    timesheets = [];
+                }
+
+                persistState();
+                sheetsSynced = true;
+                return true;
+            } catch (err) {
+                console.warn('syncFromSheets failed', err);
+                return false;
+            }
+        }
+
+        async function enterPortal(role) {
             currentRole = role;
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('main-app').classList.remove('hidden');
+
+            // Pull live data from Google Sheets (empty sheet => empty tables)
+            showLoading('Syncing data from Google Sheets...');
+            const ok = await syncFromSheets();
+            hideLoading();
+            if (ok) {
+                showToast('Synced with Google Sheets', 'info');
+            }
 
             document.getElementById('nav-username').innerText = currentUser.name;
             document.getElementById('nav-userrole').innerText = role === 'admin' ? 'Super Administrator' : (currentUser.designation || 'Staff Member');
@@ -3829,6 +3911,10 @@
             document.getElementById('form-emp-dept').value = emp.dept;
             document.getElementById('form-emp-role').value = emp.role || '';
             document.getElementById('form-emp-status').value = emp.status;
+            const mgr = document.getElementById('form-emp-manager');
+            if (mgr) mgr.value = emp.managerId || '';
+            const pwd = document.getElementById('form-emp-password');
+            if (pwd) pwd.value = '';
             document.getElementById('modal-employee').classList.remove('hidden');
         }
 
@@ -3836,7 +3922,7 @@
             document.getElementById('modal-employee').classList.add('hidden');
         }
 
-        function saveEmployeeSubmit(e) {
+        async function saveEmployeeSubmit(e) {
             e.preventDefault();
             const editId = document.getElementById('form-emp-edit-id').value;
             const name = document.getElementById('form-emp-name').value.trim();
@@ -3844,52 +3930,68 @@
             const dept = document.getElementById('form-emp-dept').value;
             const role = document.getElementById('form-emp-role').value.trim();
             const status = document.getElementById('form-emp-status').value;
+            const managerId = (document.getElementById('form-emp-manager') || {}).value || '';
+            const password = (document.getElementById('form-emp-password') || {}).value || '';
 
-            showLoading('Saving employee records...');
-            setTimeout(() => {
-                hideLoading();
+            const employee = {
+                id: editId || undefined,
+                name, email, dept, role, status,
+                managerId: managerId || '',
+                password: password || undefined,
+                avatar: AVATARS[Math.floor(Math.random() * AVATARS.length)]
+            };
 
-                if (editId) {
-                    // Update
-                    const idx = employees.findIndex(e => e.id === editId);
-                    if (idx !== -1) {
-                        employees[idx] = { ...employees[idx], name, email, dept, role, status };
-                        showToast(`Updated profile for ${name}`, 'success');
-                    }
-                } else {
-                    // Add
-                    const newId = String(100 + employees.length + 1);
-                    const randomAvatar = AVATARS[Math.floor(Math.random() * AVATARS.length)];
-                    employees.push({
-                        id: newId,
-                        name,
-                        email,
-                        dept,
-                        role,
-                        status,
-                        avatar: randomAvatar,
-                        joined: new Date().toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })
-                    });
-                    showToast(`Employee ${name} added to workspace!`, 'success');
+            try {
+                const result = await apiPost({
+                    action: 'saveEmployee',
+                    employee,
+                    actorId: currentUser ? currentUser.id : '',
+                    actorName: currentUser ? currentUser.name : ''
+                }, editId ? 'Updating employee in Sheets...' : 'Adding employee to Sheets...');
+
+                if (!result || !result.success) {
+                    showToast((result && result.error) || 'Failed to save employee', 'error');
+                    return;
                 }
 
-                persistState();
+                // Refresh from Sheets
+                await syncFromSheets();
                 renderAdminOverview();
                 renderAdminEmployees();
+                renderAdminDepartments();
+                renderAdminCharts();
                 closeEmployeeModal();
-            }, 500);
+                showToast(editId ? `Updated ${name}` : `Employee ${name} added (ID: ${result.data.id})`, 'success');
+            } catch (err) {
+                console.error(err);
+                showToast('Network error saving employee', 'error');
+            }
         }
 
-        function deleteEmployeePrompt(id) {
-            const emp = employees.find(e => e.id === id);
+        async function deleteEmployeePrompt(id) {
+            const emp = employees.find(e => String(e.id) === String(id));
             if (!emp) return;
-            if (confirm(`Are you sure you want to remove ${emp.name} (${emp.id}) from the employee directory?`)) {
-                employees = employees.filter(e => e.id !== id);
-                persistState();
+            if (!confirm(`Remove ${emp.name} (${emp.id}) from directory and Sheets?`)) return;
+
+            try {
+                const result = await apiPost({
+                    action: 'deleteEmployee',
+                    empId: id,
+                    actorId: currentUser ? currentUser.id : '',
+                    actorName: currentUser ? currentUser.name : ''
+                }, 'Deleting employee from Sheets...');
+
+                if (!result || !result.success) {
+                    showToast((result && result.error) || 'Delete failed', 'error');
+                    return;
+                }
+                await syncFromSheets();
                 renderAdminEmployees();
                 renderAdminOverview();
                 renderAdminCharts();
-                showToast(`Employee ${emp.name} removed`, 'info');
+                showToast(`${emp.name} removed`, 'info');
+            } catch (err) {
+                showToast('Network error deleting employee', 'error');
             }
         }
 
@@ -4083,14 +4185,87 @@
         }
 
         // --- 10. DEPARTMENTS DIRECTORY ---
+        function openAddDepartmentModal() {
+            document.getElementById('modal-dept-title').innerText = 'Add Department';
+            document.getElementById('form-department').reset();
+            document.getElementById('modal-department').classList.remove('hidden');
+        }
+        function closeDepartmentModal() {
+            document.getElementById('modal-department').classList.add('hidden');
+        }
+        async function saveDepartmentSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('form-dept-name').value.trim();
+            const headId = document.getElementById('form-dept-head-id').value.trim();
+            const headName = document.getElementById('form-dept-head-name').value.trim();
+            const budget = document.getElementById('form-dept-budget').value.trim();
+            if (!name) { showToast('Department name required', 'error'); return; }
+
+            try {
+                const result = await apiPost({
+                    action: 'saveDepartment',
+                    department: { name, headId, headName, budget },
+                    actorId: currentUser ? currentUser.id : '',
+                    actorName: currentUser ? currentUser.name : ''
+                }, 'Saving department to Sheets...');
+
+                if (!result || !result.success) {
+                    showToast((result && result.error) || 'Failed to save department', 'error');
+                    return;
+                }
+
+                // Also refresh dept dropdown on employee form
+                const sel = document.getElementById('form-emp-dept');
+                if (sel && ![...sel.options].some(o => o.value === name)) {
+                    const opt = document.createElement('option');
+                    opt.value = name;
+                    opt.textContent = name;
+                    sel.appendChild(opt);
+                }
+                // Update filter dropdown
+                const filter = document.getElementById('emp-filter-dept');
+                if (filter && ![...filter.options].some(o => o.value === name)) {
+                    const opt = document.createElement('option');
+                    opt.value = name;
+                    opt.textContent = name;
+                    filter.appendChild(opt);
+                }
+
+                await syncFromSheets();
+                renderAdminDepartments();
+                renderAdminCharts();
+                closeDepartmentModal();
+                showToast(`Department "${name}" saved`, 'success');
+            } catch (err) {
+                console.error(err);
+                showToast('Network error saving department', 'error');
+            }
+        }
+
         function renderAdminDepartments() {
-            const depts = [
-                { name: 'Accounts', head: 'Dara Janwary', count: employees.filter(e => e.dept === 'Accounts').length, budget: '—', icon: 'fa-calculator' },
-                { name: 'Documentation', head: 'Faraz Ud Din', count: employees.filter(e => e.dept === 'Documentation').length, budget: '—', icon: 'fa-file-lines' },
-                { name: 'Dispatch', head: 'Maryam Siddiqui', count: employees.filter(e => e.dept === 'Dispatch').length, budget: '—', icon: 'fa-truck' },
-                { name: 'Operations', head: 'Iffrah Syed', count: employees.filter(e => e.dept === 'Operations').length, budget: '—', icon: 'fa-gears' },
-                { name: 'HR', head: 'Ayesha Fatima', count: employees.filter(e => e.dept === 'HR').length, budget: '—', icon: 'fa-users-gear' }
-            ];
+            const iconMap = {
+                'Accounts': 'fa-calculator',
+                'Documentation': 'fa-file-lines',
+                'Dispatch': 'fa-truck',
+                'Operations': 'fa-gears',
+                'HR': 'fa-users-gear'
+            };
+            // Unique depts from employees + any known
+            const deptNames = [...new Set([
+                ...employees.map(e => e.dept).filter(Boolean),
+                'Accounts', 'Documentation', 'Dispatch', 'Operations', 'HR'
+            ])];
+            const depts = deptNames.map(name => {
+                const headEmp = employees.find(e => e.dept === name && String(e.role || '').toLowerCase().includes('manager'))
+                    || employees.find(e => e.dept === name);
+                return {
+                    name,
+                    head: headEmp ? headEmp.name : '—',
+                    count: employees.filter(e => e.dept === name).length,
+                    budget: '—',
+                    icon: iconMap[name] || 'fa-building'
+                };
+            });
 
             const grid = document.getElementById('adm-departments-grid');
             grid.innerHTML = depts.map(d => `
@@ -4740,6 +4915,48 @@
             document.getElementById('loading-overlay').classList.add('hidden');
         }
     </script>
+
+
+    <!-- Add / Edit Department Modal -->
+    <div id="modal-department" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm hidden">
+        <div class="w-full max-w-md p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 mb-5">
+                <div>
+                    <h3 id="modal-dept-title" class="text-lg font-bold font-heading text-slate-900 dark:text-white">Add Department</h3>
+                    <p class="text-xs text-slate-500">Saved to Google Sheets</p>
+                </div>
+                <button onclick="closeDepartmentModal()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-800 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+            <form id="form-department" onsubmit="saveDepartmentSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Department Name</label>
+                    <input type="text" id="form-dept-name" required placeholder="e.g. Logistics"
+                        class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Head / Manager ID</label>
+                    <input type="text" id="form-dept-head-id" placeholder="e.g. 101"
+                        class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Head Name</label>
+                    <input type="text" id="form-dept-head-name" placeholder="Manager full name"
+                        class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Budget (optional)</label>
+                    <input type="text" id="form-dept-budget" placeholder="e.g. $10,000"
+                        class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs focus:outline-none">
+                </div>
+                <div class="pt-4 flex items-center justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
+                    <button type="button" onclick="closeDepartmentModal()" class="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600">Cancel</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold">Save Department</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Employee Profile Detail Modal -->
     <div id="modal-emp-profile" class="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-slate-950/50 backdrop-blur-sm hidden" style="display:none" onclick="if(event.target===this)closeEmpProfileModal()">
